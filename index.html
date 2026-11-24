@@ -1,0 +1,622 @@
+<!doctype html><html lang="pt-BR" class="th-light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Squad · Protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;700&display=swap">
+<style>:root{--sq-font-d:'Fredoka',system-ui,sans-serif;--sq-font:'Inter',system-ui,sans-serif;--sq-font-t:'Nunito Sans','Inter',sans-serif}
+.th-light{--sq-bg-base:#F3EDFF;--sq-bg1:#FBF7FF;--sq-bg2:#EFE3FF;--sq-surface-white:#FFFFFF;--sq-surface-2:#F1E8FF;--sq-text-primary:#2B1747;--sq-text-muted:#5C4A7E;--sq-text-muted-2:#6E5B92;--sq-border-default:#E2D3FA;--sq-brand-orange:#FF9A3C;--sq-text-on-orange:#2A1000;--sq-brand-orange-soft:#FFE7D1;--sq-brand-orange-text:#A54A00;--sq-brand-violet:#7C3AED;--sq-brand-violet-soft:#EDE1FF;--sq-brand-violet-text:#5B21B6;--sq-brand-lilac-button:#EFE6FF;--sq-brand-violet-dark:#6D28D9;--sq-status-mint:#14B886;--sq-status-mint-soft:#DBF7EC;--sq-status-mint-text:#0B7A58;--sq-status-mint-card:#E3F8EF;--sq-status-coral:#E0336B;--sq-status-coral-soft:#FFE1EB;--sq-status-coral-text:#B01D50;--sq-status-coral-card:#FFE7EF;--sq-status-butter:#E0A800;--sq-status-butter-soft:#FFF3CC;--sq-butter-text:#7A5A00;--sq-glass:rgba(255,255,255,.86);--sq-tab-bg:#FFFFFF;--sq-tab-line:#E2DFF1;--sq-tab-on:#E2D3FA;--sq-tab-ic:#6D28D9;--sq-tab-lb:#5F5B7D;--sq-shadow:0 6px 22px rgba(91,33,182,.08);--sq-shadow2:0 4px 14px rgba(91,33,182,.10);--sq-page:#EDE3FF;--sq-scrim:rgba(15,5,30,.55);--sq-gxl:rgba(124,58,237,.28);--sq-gxglow:rgba(177,76,243,.35)}
+.th-dark{--sq-bg-base:#1A0933;--sq-bg1:#210B40;--sq-bg2:#3A0F72;--sq-surface-white:#1C0C38;--sq-surface-2:#2C1652;--sq-text-primary:#F8F2FF;--sq-text-muted:#CDB9EC;--sq-text-muted-2:#A68CCF;--sq-border-default:#3E2470;--sq-brand-orange:#FF9A3C;--sq-text-on-orange:#2A1000;--sq-brand-orange-soft:#47225A;--sq-brand-orange-text:#FFBC7A;--sq-brand-violet:#A45CFF;--sq-brand-violet-soft:#3A1C6E;--sq-brand-violet-text:#CDA6FF;--sq-brand-lilac-button:#2C1652;--sq-brand-violet-dark:#C9A3FF;--sq-status-mint:#3DE0A6;--sq-status-mint-soft:#143C3A;--sq-status-mint-text:#5BEDB8;--sq-status-mint-card:#12302F;--sq-status-coral:#FF5C8A;--sq-status-coral-soft:#4A1638;--sq-status-coral-text:#FF96B6;--sq-status-coral-card:#3A1230;--sq-status-butter:#FFD166;--sq-status-butter-soft:#3E2A2A;--sq-butter-text:#FFD166;--sq-glass:#1C0C38;--sq-tab-bg:#1C0C38;--sq-tab-line:#3E2470;--sq-tab-on:#3A1C6E;--sq-tab-ic:#A45CFF;--sq-tab-lb:#CDB9EC;--sq-shadow:0 6px 22px rgba(0,0,0,.25);--sq-shadow2:0 4px 14px rgba(0,0,0,.3);--sq-page:#120624;--sq-scrim:rgba(5,0,15,.65);--sq-gxl:rgba(164,92,255,.55);--sq-gxglow:rgba(177,76,243,.55)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:var(--sq-font);-webkit-font-smoothing:antialiased;background:var(--sq-page);color:var(--sq-text-primary);transition:background .3s}
+body{display:flex;align-items:center;justify-content:center;gap:40px;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input,textarea{font:inherit;color:inherit;background:transparent;border:0;outline:0;width:100%;resize:none;padding:0}
+input::placeholder,textarea::placeholder{color:var(--sq-text-muted-2)}
+/* ---- painel lateral ---- */
+.side{width:300px;max-height:92vh;display:flex;flex-direction:column;gap:14px}
+.side .brand{display:flex;align-items:center;gap:10px;font:700 26px var(--sq-font-d)}
+.side p{margin:0;color:var(--sq-text-muted);font-size:14px;line-height:20px}
+.ctl{display:flex;gap:6px;background:var(--sq-surface-white);border:1px solid var(--sq-border-default);border-radius:999px;padding:4px;width:max-content}
+.ctl button{padding:8px 14px;border-radius:999px;font-weight:600;font-size:13px;color:var(--sq-text-muted)}
+.ctl button[aria-pressed=true]{background:var(--sq-brand-violet);color:#fff}
+.map{overflow:auto;background:var(--sq-surface-white);border:1px solid var(--sq-border-default);border-radius:20px;padding:10px;box-shadow:var(--sq-shadow)}
+.map h4{margin:10px 8px 4px;font:600 11px var(--sq-font-d);letter-spacing:1.4px;text-transform:uppercase;color:var(--sq-text-muted)}
+.map button{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:10px;font-size:13px;color:var(--sq-text-primary)}
+.map button:hover{background:var(--sq-surface-2)}.map button[aria-current=true]{background:var(--sq-brand-violet-soft);color:var(--sq-brand-violet-text);font-weight:700}
+.map button span{color:var(--sq-text-muted-2);font-variant-numeric:tabular-nums;margin-right:6px}
+@media (max-width:900px){.side{display:none}body{gap:0}}
+/* ---- celular ---- */
+.phone{position:relative;width:393px;height:852px;border-radius:56px;background:#0B0716;padding:0;box-shadow:0 0 0 11px #0B0716,0 0 0 13px #2a2140,0 40px 90px rgba(40,10,90,.35);transform-origin:center;flex:none}
+.scr{position:absolute;inset:0;border-radius:48px;overflow:hidden;background:linear-gradient(165deg,var(--sq-bg1),var(--sq-bg2));isolation:isolate}
+.sbar{position:absolute;top:0;left:0;right:0;height:54px;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:0 32px 0 46px;font:600 16px var(--sq-font);pointer-events:none;color:var(--sq-text-primary)}
+.sbar.light{color:#fff}
+.sbar .ico{display:flex;gap:6px;align-items:center}
+.island{position:absolute;top:11px;left:50%;width:124px;height:36px;margin-left:-62px;border-radius:18px;background:#000;z-index:41}
+.hbar{position:absolute;bottom:8px;left:50%;width:136px;height:5px;margin-left:-68px;border-radius:3px;background:var(--sq-text-primary);opacity:.85;z-index:42;pointer-events:none}
+.view{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.view::-webkit-scrollbar{display:none}
+.view.enter{animation:vIn .34s cubic-bezier(.2,.8,.2,1)}.view.enterb{animation:vInB .34s cubic-bezier(.2,.8,.2,1)}
+@keyframes vIn{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes vInB{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.page{min-height:100%;display:flex;flex-direction:column;padding:0 20px}
+.col{display:flex;flex-direction:column}
+.foot{margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:24px}
+.backb{position:absolute;left:4px;top:64px;width:44px;height:44px;display:grid;place-items:center;z-index:5;border-radius:50%}
+.hdr{position:absolute;top:74px;display:flex;align-items:center;gap:8px;font:700 20px/24px var(--sq-font-d);z-index:4}
+.hdr.small{font:700 16px/20px var(--sq-font)}
+.hdrr{position:absolute;right:20px;top:64px;z-index:5}
+/* ---- tipografia ---- */
+.t1{font:700 30px/33px var(--sq-font-d);margin:0}.t2{font:700 26px/29px var(--sq-font-d);margin:0}.hd{font:700 20px/24px var(--sq-font-d)}
+.h{font:600 17px/22px var(--sq-font-d)}.k{font:600 12px/16px var(--sq-font-d);letter-spacing:1.4px;text-transform:uppercase;color:var(--sq-text-muted)}
+.b{font:700 15px/20px var(--sq-font)}.b16{font:700 16px/20px var(--sq-font)}.p{font:400 15px/22px var(--sq-font)}.m{font:400 13px/18px var(--sq-font);color:var(--sq-text-muted)}
+.l{font:700 14px/18px var(--sq-font);color:var(--sq-brand-violet-text)}.s{font:600 14px/17px var(--sq-font)}.tg{font:700 12px/15px var(--sq-font)}
+.c{text-align:center}
+.tx{margin:0}
+/* ---- blocos ---- */
+.card{border-radius:24px;padding:17px;display:flex;flex-direction:column;background:var(--sq-surface-white);box-shadow:var(--sq-shadow)}
+.card.mint{background:var(--sq-status-mint-card);border:1px solid var(--sq-status-mint);box-shadow:none}
+.card.coral{background:var(--sq-status-coral-card);border:1px solid var(--sq-status-coral);box-shadow:none}
+.card.pri{background:var(--sq-brand-violet-soft);border:1px solid var(--sq-brand-violet);box-shadow:none}
+.card.butter{background:var(--sq-status-butter-soft);border:1px solid var(--sq-status-butter);box-shadow:none}
+.card.soft{background:var(--sq-surface-2);box-shadow:none}
+.row{display:flex;align-items:center}
+.chips,.tags{display:flex;flex-wrap:wrap}
+.chips{gap:8px}.tags{gap:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border-radius:20px;background:var(--sq-glass);border:1px solid var(--sq-border-default);font:600 14px/17px var(--sq-font);transition:transform .15s,background .2s,border-color .2s}
+.chip.on{background:var(--sq-brand-violet-soft);border:2px solid var(--sq-brand-violet);color:var(--sq-brand-violet-text);padding:10px 14px}
+.chip.on.m{background:var(--sq-status-mint-soft);border-color:var(--sq-status-mint);color:var(--sq-status-mint-text)}
+.chip.on.c{background:var(--sq-status-coral-soft);border-color:var(--sq-status-coral);color:var(--sq-status-coral-text)}
+.chip:active{transform:scale(.94)}.chip.pop{animation:pop .3s}
+@keyframes pop{40%{transform:scale(1.08)}}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:11.5px;font:700 12px/15px var(--sq-font)}
+.tag.p{background:var(--sq-brand-violet-soft);color:var(--sq-brand-violet-text)}.tag.m{background:var(--sq-status-mint-soft);color:var(--sq-status-mint-text)}.tag.o{background:var(--sq-brand-orange-soft);color:var(--sq-brand-orange-text)}.tag.c{background:var(--sq-status-coral-soft);color:var(--sq-status-coral-text)}.tag.b{background:var(--sq-status-butter-soft);color:var(--sq-butter-text)}.tag.g{background:var(--sq-surface-2);color:var(--sq-text-muted)}
+.field{display:flex;flex-direction:column;gap:6px}
+.inp{display:flex;align-items:center;gap:8px;min-height:52px;padding:0 15px;border-radius:14px;background:var(--sq-glass);border:1px solid var(--sq-border-default);font-size:16px;transition:border-color .2s,box-shadow .2s}
+.inp:focus-within{border-color:var(--sq-brand-violet);box-shadow:0 0 0 3px var(--sq-brand-violet-soft)}
+.inp.area{align-items:flex-start;padding:13px 15px;min-height:96px}.inp.area textarea{height:70px;line-height:22px}
+.btn{white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;padding:0 20px;border-radius:26px;font:700 16px/20px var(--sq-font);transition:transform .12s,box-shadow .2s,filter .2s;position:relative;overflow:hidden}
+.btn.sm{height:40px;border-radius:20px;font-size:14px}
+.btn.p{background:var(--sq-brand-orange);border:1px solid var(--sq-brand-orange);color:var(--sq-text-on-orange);box-shadow:0 10px 24px rgba(255,154,60,.32)}
+.btn.s{background:var(--sq-brand-lilac-button);color:var(--sq-brand-violet-text)}
+.btn.d{background:var(--sq-glass);border:1.5px solid var(--sq-status-coral);color:var(--sq-status-coral-text)}
+.btn.g{color:var(--sq-brand-violet-text)}
+.btn.w{background:var(--sq-glass);border:1px solid var(--sq-border-default);color:var(--sq-text-primary)}
+.btn:active{transform:scale(.97)}.btn.p:hover{filter:brightness(1.05)}
+.btn.hug{width:auto}
+.ib{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;transition:transform .12s}
+.ib:active{transform:scale(.92)}
+.ib.w{background:var(--sq-surface-white);box-shadow:var(--sq-shadow2)}.ib.c{background:var(--sq-status-coral-soft);color:var(--sq-status-coral-text)}.ib.o{background:var(--sq-brand-orange);color:var(--sq-text-on-orange)}.ib.p{background:var(--sq-brand-violet-soft);color:var(--sq-brand-violet-text)}
+.av{display:grid;place-items:center;flex:none;font-family:var(--sq-font-d);font-weight:700;color:#1A0933;position:relative}
+.av.empty{border:1px dashed var(--sq-text-muted-2)}
+.av .dot{position:absolute;right:-2px;bottom:-2px;width:12px;height:12px;border-radius:50%;background:var(--sq-status-mint);border:2px solid var(--sq-surface-white)}
+.tgl{width:50px;height:30px;border-radius:15px;background:var(--sq-surface-2);border:1px solid var(--sq-border-default);position:relative;flex:none;transition:background .2s}
+.tgl::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+.tgl.on{background:var(--sq-brand-violet);border-color:var(--sq-brand-violet)}.tgl.on::after{transform:translateX(20px)}
+.hr{height:1px;background:var(--sq-border-default);align-self:stretch}
+.rw{display:flex;align-items:center;gap:12px;text-align:left;width:100%}
+.rw .mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.icbox{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+.icbox.p{background:var(--sq-brand-violet-soft);color:var(--sq-brand-violet-text)}.icbox.m{background:var(--sq-status-mint-soft);color:var(--sq-status-mint-text)}.icbox.o{background:var(--sq-brand-orange-soft);color:var(--sq-brand-orange-text)}.icbox.c{background:var(--sq-status-coral-soft);color:var(--sq-status-coral-text)}.icbox.b{background:var(--sq-status-butter-soft);color:var(--sq-butter-text)}.icbox.g{background:var(--sq-surface-2);color:var(--sq-text-muted)}
+.clickable{cursor:pointer;border-radius:14px;transition:background .15s}
+.clickable:hover{background:color-mix(in srgb,var(--sq-brand-violet-soft) 45%,transparent)}
+.li{display:flex;gap:10px;align-items:flex-start}.li svg{flex:none;margin-top:2px;color:var(--sq-status-mint-text)}
+.st{display:flex;gap:14px;opacity:0;animation:fadeUp .4s forwards}
+.st .dt{width:14px;height:14px;border-radius:50%;border:2px solid var(--sq-border-default);background:var(--sq-surface-2);margin-top:3px;flex:none}
+.st.d .dt{background:var(--sq-status-mint);border-color:var(--sq-status-mint)}.st.a .dt{background:var(--sq-brand-violet-soft);border-color:var(--sq-brand-violet);box-shadow:0 0 0 0 var(--sq-brand-violet);animation:ring 1.6s infinite}
+.st.p .b{color:var(--sq-text-muted)}
+@keyframes ring{70%{box-shadow:0 0 0 7px transparent}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.q{padding:12px 14px;border-radius:12px;background:var(--sq-status-coral-soft)}
+.bar .trk{height:6px;border-radius:3px;background:var(--sq-surface-2);overflow:hidden}.bar .trk i{display:block;height:100%;width:0;border-radius:3px;background:var(--sq-status-mint);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.cat{display:block;object-fit:contain;pointer-events:none;user-select:none}
+.msg{display:flex;gap:12px}.msg .mid{flex:1;display:flex;flex-direction:column;gap:3px}
+.msg.new{animation:fadeUp .35s}
+/* ---- tab bar ---- */
+.tabs{position:absolute;left:0;right:0;bottom:0;height:116px;padding:12px 24px 32px;display:flex;justify-content:center;gap:60px;background:var(--sq-tab-bg);border-top:1px solid var(--sq-tab-line);border-radius:24px 24px 0 0;z-index:30}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:4px;font:400 13px var(--sq-font-t);color:var(--sq-tab-lb)}
+.tabs .g{padding:4px 16px;border-radius:10px;display:grid;place-items:center;height:48px;color:var(--sq-tab-ic);transition:background .2s}
+.tabs button[aria-current=true] .g{background:var(--sq-tab-on)}
+.tabs button[aria-current=true]{color:var(--sq-text-primary);font-weight:700}
+/* ---- gaveta e toast ---- */
+.scrim{position:absolute;inset:0;background:var(--sq-scrim);z-index:50;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:51;background:var(--sq-surface-white);border-radius:28px 28px 0 0;padding:14px 20px 34px;display:flex;flex-direction:column;gap:16px;max-height:88%;overflow:auto;animation:sheetUp .38s cubic-bezier(.2,.9,.25,1)}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--sq-border-default);align-self:center}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+.under{pointer-events:none}
+.toast{position:absolute;left:16px;right:16px;top:58px;z-index:70;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:#2B1747;color:#fff;box-shadow:0 16px 40px rgba(20,0,50,.35);font-size:14px;line-height:19px;animation:toastIn .45s cubic-bezier(.2,1.2,.3,1)}
+.toast.go{cursor:pointer}.toast b{display:block}.toast small{opacity:.8}
+.toast .ti{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#FFD166;color:#2A1000;flex:none}
+.toast.out{animation:toastOut .3s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(-24px) scale(.96)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-16px)}}
+/* ---- extras ---- */
+.lvl{position:relative;width:52px;height:56px;flex:none}
+.lvl svg{position:absolute;inset:0}.lvl b{position:absolute;left:0;right:0;top:20px;text-align:center;font:700 20px var(--sq-font-d);color:#fff}.lvl small{position:absolute;left:0;right:0;top:9px;text-align:center;font:700 8px var(--sq-font-d);letter-spacing:.5px;color:#fff;opacity:.9}
+.conf{position:absolute;inset:0;pointer-events:none;z-index:60}
+.live{animation:livep 1.4s infinite}@keyframes livep{50%{opacity:.55}}
+.typing{display:inline-flex;gap:3px}.typing i{width:6px;height:6px;border-radius:50%;background:var(--sq-text-muted-2);animation:tdot 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tdot{30%{transform:translateY(-4px);opacity:1}0%,60%,100%{opacity:.4}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.st{opacity:1}}
+
+.view.dark{background:linear-gradient(180deg,#7C1D6F 0%,#1B0E33 55%,#120A22 100%)}
+.view.dark .m{color:#CDB9EC}
+
+.col>*{flex-shrink:0}
+
+.banr{position:relative;display:block;height:92px;border-radius:18px;overflow:hidden;background-image:linear-gradient(180deg,rgba(14,9,28,.35),rgba(14,9,28,.72)),linear-gradient(90deg,rgba(43,23,71,.55),rgba(43,23,71,.15)),url(img/banner-room.webp);background-size:cover,cover,260% auto;transition:background-position .6s ease}
+.lobbyc:hover .banr{background-position:50% 50%}
+.view.dark .backb{color:#fff}
+
+.achg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.acht{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px 12px;border-radius:20px;background:var(--sq-surface-white);border:1px solid var(--sq-border-default);box-shadow:var(--sq-shadow2);font:inherit;color:var(--sq-text-primary);cursor:pointer;text-align:center;transition:transform .15s}
+.acht:active{transform:scale(.96)}
+.acht b{font:700 12.5px/15px var(--sq-font);min-height:30px;display:flex;align-items:center}
+.acht small{font:600 11px var(--sq-font);color:var(--sq-text-muted)}
+.acht.on small{color:var(--sq-status-mint-text)}
+.achi{width:52px;height:52px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none;background:var(--sq-surface-2);color:var(--sq-text-muted-2);border:2px dashed var(--sq-border-default)}
+.achi.on,.acht.on .achi{background:var(--sq-g);color:#fff;border:2px solid rgba(255,255,255,.55);box-shadow:0 6px 14px rgba(124,58,237,.25)}
+.achi.big{width:60px;height:60px}.achi.sm{width:40px;height:40px}
+.achi.more{border-style:solid;font:700 13px var(--sq-font);color:var(--sq-brand-violet-text)}
+.achb{display:block;width:100%;max-width:80px;height:6px;border-radius:3px;background:var(--sq-surface-2);overflow:hidden}
+.achsum .achb{max-width:none;height:8px}
+.achb i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#FF9A3C,#B14CF3)}
+.achprev{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.card.row{flex-direction:row;align-items:center;text-align:left}
+
+html.embed,html.embed body,body.embed{gap:0;background:transparent!important}
+.embed .phone{box-shadow:0 0 0 11px #0B0716,0 0 0 13px #2a2140,0 24px 50px rgba(40,10,90,.28)}
+body.embed .side{display:none}
+
+.w01{position:absolute;inset:0;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:center;text-align:center;padding:62px 20px 34px;background:linear-gradient(180deg,#FBF7FF 0%,#E9DAFF 34%,#B583F5 64%,#7C3AED 86%,#5B19A8 100%)}
+.th-dark .w01{background:linear-gradient(180deg,#210B40 0%,#2E0F5C 38%,#4B128F 66%,#6D28D9 88%,#7C3AED 100%)}
+.w01 canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.w01 .floor{position:absolute;left:-60%;right:-60%;bottom:-6%;height:40%;z-index:-2;pointer-events:none;transform:perspective(300px) rotateX(64deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.45) 1.5px,transparent 1.5px),linear-gradient(90deg,rgba(255,255,255,.45) 1.5px,transparent 1.5px);background-size:44px 44px;animation:wFloor 1.5s linear infinite;-webkit-mask-image:linear-gradient(to top,#000 5%,transparent 80%);mask-image:linear-gradient(to top,#000 5%,transparent 80%)}
+@keyframes wFloor{to{background-position:0 44px,0 0}}
+.w01 .scan{position:absolute;inset:0;z-index:20;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.04) 0 1px,transparent 1px 3px)}
+.w01 .lg{display:flex;align-items:center;gap:8px;font:700 26px var(--sq-font-d);color:var(--sq-text-primary)}
+.w01 .pill{margin-top:12px;padding:7px 14px;border-radius:999px;background:#2B1747;color:#fff;font:700 13px var(--sq-font);box-shadow:0 6px 18px rgba(43,23,71,.25)}
+.th-dark .w01 .pill{background:#F8F2FF;color:#2B1747}
+.w01 h1{margin:18px 0 0;font:700 38px/40px var(--sq-font-d);color:var(--sq-text-primary)}
+.w01 .wd{display:inline-block;opacity:0;animation:wWord .55s cubic-bezier(.2,.9,.3,1.3) forwards;animation-delay:calc(var(--sq-i)*70ms + var(--bd,0ms) + 200ms)}
+@keyframes wWord{from{opacity:0;transform:translateY(18px) rotate(-4deg)}to{opacity:1;transform:none}}
+.glitch{position:relative;font-style:normal;color:#7C3AED;text-shadow:0 0 18px rgba(177,76,243,.45)}
+.th-dark .glitch{color:#C9A3FF}
+.glitch::before,.glitch::after{content:attr(data-t);position:absolute;left:0;top:0;opacity:0}
+.glitch::before{color:#FF4FA3;animation:gl1 3.2s infinite steps(1)}.glitch::after{color:#3DE0A6;animation:gl2 3.2s infinite steps(1)}
+@keyframes gl1{0%,86%,100%{opacity:0;transform:none}87%{opacity:.85;transform:translate(-3px,-1px);clip-path:inset(10% 0 55% 0)}89%{opacity:.85;transform:translate(3px,1px);clip-path:inset(60% 0 8% 0)}91%{opacity:0}}
+@keyframes gl2{0%,86%,100%{opacity:0;transform:none}88%{opacity:.8;transform:translate(3px,0);clip-path:inset(35% 0 30% 0)}90%{opacity:.8;transform:translate(-2px,1px);clip-path:inset(5% 0 70% 0)}92%{opacity:0}}
+.w01 .sub{margin:12px 0 0;font:400 16px/22px var(--sq-font);color:var(--sq-text-muted)}
+.w01 .in{opacity:0;animation:wIn .6s cubic-bezier(.2,.9,.3,1.2) forwards;animation-delay:calc(var(--sq-d,0)*90ms + var(--bd,0ms))}
+@keyframes wIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.w01 .stage{position:relative;width:100%;flex:1;min-height:300px;margin-top:6px}
+.w01 .ring{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;border:2px dashed rgba(255,255,255,.5);animation:wSpin 18s linear infinite}
+.w01 .ring.r2{width:236px;height:236px;margin:-118px 0 0 -118px;border:2px solid transparent;border-top-color:#FF9A3C;border-right-color:#FF4FA3;animation-duration:3.4s;filter:drop-shadow(0 0 6px rgba(255,154,60,.8))}
+@keyframes wSpin{to{transform:rotate(360deg)}}
+.w01 .glow{position:absolute;inset:6% 0 0;background:radial-gradient(closest-side,rgba(255,255,255,.55),transparent);filter:blur(10px);animation:wPulse 2.8s ease-in-out infinite}
+.th-dark .w01 .glow{background:radial-gradient(closest-side,rgba(177,76,243,.6),transparent)}
+@keyframes wPulse{50%{opacity:.6;transform:scale(.94)}}
+.w01 .catw{position:absolute;left:50%;bottom:-4px;transform:translate(calc(-50% + var(--px,0)*14px),calc(var(--py,0)*10px));transition:transform .25s ease-out}
+.w01 .catw img{width:330px;animation:wBob 3.2s ease-in-out infinite;filter:drop-shadow(0 22px 26px rgba(40,5,90,.4))}
+@keyframes wBob{50%{transform:translateY(-10px) rotate(-1.5deg)}}
+.w01 .fc{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:18px;background:#fff;color:#2B1747;box-shadow:0 12px 28px rgba(60,10,120,.25);text-align:left;transform:translate(calc(var(--px,0)*-10px),calc(var(--py,0)*-8px)) rotate(var(--sq-r));transition:transform .3s ease-out;z-index:3}
+.w01 .fc>span{animation:wBob 4s ease-in-out infinite}
+.w01 .fc b{display:block;font:700 13px var(--sq-font)}.w01 .fc small{font-size:11px;color:#5C4A7E}
+.w01 .fc.m{background:#E3F8EF;color:#0B7A58}.w01 .fc.m b{color:#0B7A58}
+.w01 .xp{position:absolute;right:-4px;top:-14px;font:800 14px var(--sq-font-d);color:#FF9A3C;text-shadow:0 0 10px rgba(255,154,60,.9);animation:wXp 2.6s ease-out infinite}
+@keyframes wXp{0%{opacity:0;transform:translateY(8px) scale(.8)}20%{opacity:1;transform:none}70%{opacity:1;transform:translateY(-14px)}100%{opacity:0;transform:translateY(-22px)}}
+.w01 .hc{position:absolute;width:22px;height:22px;border:0 solid rgba(255,255,255,.9);animation:wBlink 2.4s ease-in-out infinite}
+.w01 .hc.tl{left:4px;top:8px;border-top-width:3px;border-left-width:3px;border-top-left-radius:8px}.w01 .hc.tr{right:4px;top:8px;border-top-width:3px;border-right-width:3px;border-top-right-radius:8px}
+.w01 .hc.bl{left:4px;bottom:8px;border-bottom-width:3px;border-left-width:3px;border-bottom-left-radius:8px}.w01 .hc.br{right:4px;bottom:8px;border-bottom-width:3px;border-right-width:3px;border-bottom-right-radius:8px}
+.w01 .hc.tl,.w01 .hc.tr{border-color:rgba(124,58,237,.7)}
+@keyframes wBlink{50%{opacity:.35}}
+.w01 .ach{position:absolute;left:50%;top:0;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:999px;background:linear-gradient(90deg,#2A1050,#4B128F);color:#fff;font:700 12px var(--sq-font-d);white-space:nowrap;box-shadow:0 0 0 1px rgba(255,209,102,.6),0 8px 24px rgba(75,18,143,.45);opacity:0;animation:wAch 6s ease-in-out 2.8s infinite;z-index:4}
+.w01 .ach i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#FFD166;color:#2A1000}
+@keyframes wAch{0%,6%{opacity:0;transform:translate(-50%,-10px) scale(.9)}12%,48%{opacity:1;transform:translate(-50%,0)}56%,100%{opacity:0;transform:translate(-50%,-6px)}}
+.w01 .online{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.9);margin:6px 0 12px}
+.w01 .online .dot{width:8px;height:8px;border-radius:50%;background:#3DE0A6;animation:wPing 1.6s infinite}
+.w01 .online b{color:#fff;font-variant-numeric:tabular-nums}
+@keyframes wPing{0%{box-shadow:0 0 0 0 rgba(61,224,166,.7)}70%{box-shadow:0 0 0 8px rgba(61,224,166,0)}}
+.w01 .acts{width:100%;display:flex;flex-direction:column;gap:12px}
+.w01 .btn.s{background:#EFE6FF;color:#5B21B6}
+.w01 .cta{animation:wGlow 2.2s ease-in-out infinite}
+.w01 .cta::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.6) 45%,transparent 60%);transform:translateX(-120%);animation:wShine 3s ease-in-out 1.5s infinite}
+@keyframes wShine{40%,100%{transform:translateX(120%)}}
+@keyframes wGlow{50%{box-shadow:0 8px 30px rgba(255,154,60,.65),0 0 0 4px rgba(255,154,60,.2)}}
+.w01 .terms{margin:12px 0 0;font-size:12px;line-height:17px;color:rgba(255,255,255,.88)}.w01 .terms u{color:#fff}
+.boot{position:absolute;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:radial-gradient(120% 80% at 50% 30%,#3A0F72,#12061F 70%);color:#fff;transition:opacity .45s,visibility .45s;border-radius:48px}
+.boot.done{opacity:0;visibility:hidden}
+.boot .bl{font:700 44px var(--sq-font-d);display:flex;align-items:center;gap:12px;text-shadow:0 0 22px rgba(164,92,255,.9)}
+.boot .bar2{width:200px;height:8px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.boot .bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FF4FA3,#B23CFF,#FF9A3C);box-shadow:0 0 12px #B23CFF}
+.boot small{font:600 11px var(--sq-font-d);letter-spacing:3px;color:#CDB9EC}.boot .ps{color:#FFD166;animation:wBlink .8s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){.w01 .wd,.w01 .in{opacity:1}.boot{display:none}}
+</style></head><body>
+<aside class="side" aria-label="Controles do protótipo">
+ <div class="brand"><span id="sidelogo"></span>squad</div>
+ <p>Protótipo navegável do app Squad: ache um time sem toxicidade. Toque nas telas ou pule direto pelo mapa.</p>
+ <div class="row" style="gap:8px"><div class="ctl" role="group" aria-label="Tema"><button data-sqtheme="light">Claro</button><button data-sqtheme="dark">Escuro</button></div><button class="ctl" id="restart" style="padding:8px 14px;font-weight:600;font-size:13px;color:var(--sq-text-muted)">Recomeçar</button></div>
+ <nav class="map" id="map" aria-label="Mapa de telas"></nav>
+</aside>
+<div class="phone"><div class="scr" id="scr"></div></div>
+<script>const I={
+home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+squad:'<circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9.5" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.5c3 0 6 1.8 6 5.5"/>',
+user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>',
+shield:'<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/>',
+shieldck:'<path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+bell:'<path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',
+back:'<path d="M15 5 8 12l7 7"/>',right:'<path d="M9 5l7 7-7 7"/>',
+x:'<path d="M6 6l12 12M18 6 6 18"/>',
+check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+send:'<path d="M4 12 20 4l-6 16-3-7z"/>',
+flag:'<path d="M5 21V4h11l-2 4 2 4H5"/>',
+mute:'<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6M21 9l-5 6"/>',
+block:'<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>',
+exit:'<path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4M6 12h9"/>',
+star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
+mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+ping:'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8"/>',
+gear:'<path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/>',
+lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',
+play:'<path d="M7 4v16l13-8z"/>',
+heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+srv:'<rect x="3" y="4" width="18" height="7" rx="2.5"/><rect x="3" y="13" width="18" height="7" rx="2.5"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+hash:'<path d="M5 9h14M4 15h14M10 4 8 20M16 4l-2 16"/>',
+vol:'<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 9a4 4 0 0 1 0 6M19 6.5a7.5 7.5 0 0 1 0 11"/>',
+book:'<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19"/>',
+mega:'<path d="M3 10v4h3l7 4V6L6 10H3z"/><path d="M16 9.5a3.5 3.5 0 0 1 0 5"/>',
+more:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
+camera:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2.2 4.8-4.8 2.2 2.2-4.8z"/>',
+filter:'<path d="M4 5h16M7 12h10M10 19h4"/>',
+discord:'<path d="M7 7c3-1.3 7-1.3 10 0l2 9c-1.5 1.2-3 2-4.5 2l-1-1.5M7 7 5 16c1.5 1.2 3 2 4.5 2l1-1.5"/><circle cx="9.5" cy="12" r="1"/><circle cx="14.5" cy="12" r="1"/>',
+moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
+};
+let LG=0;const logo=(sz=36)=>{const id='lg'+(LG++);return `<svg width="${sz}" height="${Math.round(sz*40/42)}" viewBox="0 0 42 40" fill="none" aria-hidden="true"><path d="M5.9 6.4c-.16-.89.27-1.12 1.31-.7l6.73 3.83c4.7-1.77 9.4-1.77 14.11 0l6.73-3.83c1.04-.42 1.47-.19 1.31.7l-1.4 10.79c.88 3.23.47 6.61-1.23 10.15-2.02 4.33-6.18 8.05-12.47 11.18-6.29-3.13-10.45-6.85-12.47-11.18-1.7-3.54-2.1-6.92-1.23-10.15z" fill="url(#${id})"/><path d="M11.9 19.3c1.75-1.2 3.6-1.28 5.57-.24.88.47 1.18 1.17.9 2.11-.43 1.46-1.55 2.27-3.36 2.42-1.64-.15-2.84-.88-3.6-2.18-.44-.73-.28-1.43.49-2.11zM30.1 19.3c-1.75-1.2-3.6-1.28-5.57-.24-.88.47-1.18 1.17-.9 2.11.43 1.46 1.55 2.27 3.36 2.42 1.64-.15 2.84-.88 3.6-2.18.44-.73.28-1.43-.49-2.11zM19.52 25.23c.99-.57 1.97-.57 2.96 0 .27.21.27.5 0 .86L21 27.27l-1.48-1.17c-.27-.37-.27-.65 0-.86z" fill="#fff"/><path d="M18.54 28.75c1.31.47 2.46-1.42 2.46-2.75 0 1.33 1.15 3.22 2.46 2.75" stroke="#fff" stroke-linecap="round"/><defs><linearGradient id="${id}" x1="5.87" y1="5.5" x2="38.76" y2="35.64" gradientUnits="userSpaceOnUse"><stop stop-color="#C34CF4"/><stop offset="1" stop-color="#8238E8"/></linearGradient></defs></svg>`;};
+
+/* ===== Squad · protótipo v5 · núcleo ===== */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+I.moon='<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/>';
+I.sun='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+I.google='<path d="M21 12.2c0-.7-.1-1.3-.2-1.9H12v3.6h5.1a4.4 4.4 0 0 1-1.9 2.9v2.4h3.1c1.8-1.7 2.7-4.1 2.7-7z" fill="#4285F4" stroke="none"/><path d="M12 21.5c2.6 0 4.7-.9 6.3-2.3l-3.1-2.4c-.9.6-1.9.9-3.2.9-2.5 0-4.6-1.7-5.3-3.9H3.5v2.5A9.5 9.5 0 0 0 12 21.5z" fill="#34A853" stroke="none"/><path d="M6.7 13.8a5.7 5.7 0 0 1 0-3.6V7.7H3.5a9.5 9.5 0 0 0 0 8.6z" fill="#FBBC05" stroke="none"/><path d="M12 6.3c1.4 0 2.6.5 3.6 1.4l2.7-2.7A9.5 9.5 0 0 0 3.5 7.7l3.2 2.5C7.4 8 9.5 6.3 12 6.3z" fill="#EA4335" stroke="none"/>';
+I.eye2='<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>';
+const IC=(n,s=22,col)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${col||'currentColor'}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]||I.info}</svg>`;
+const CV=c=>!c?'':c[0]==='#'?c:c.startsWith('raw/')?'#'+c.slice(4):'var(--'+c.replace(/\//g,'-')+')';
+const DEFC={l:'brand/violet-text',m:'text/muted',k:'text/muted'};
+const LVL=n=>`<span class="lvl" aria-label="Nível ${n}"><svg viewBox="0 0 52 56"><path d="M26 2 4 10v15c0 13 9.4 24.6 22 28 12.6-3.4 22-15 22-28V10z" fill="url(#lvg)"/><defs><linearGradient id="lvg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#B14CF3"/><stop offset="1" stop-color="#6D28D9"/></linearGradient></defs></svg><small>NÍVEL</small><b>${n}</b></span>`;
+const CATS={wave2:'cat-wave2',happy2:'cat-happy2',laptop2:'cat-laptop2',focus:'cat-focus',shield:'cat-shield',think:'cat-think',sleep:'cat-sleep',excited:'cat-excited',front:'cat-front',cool:'cat-cool',play:'cat-play',happy:'cat-happy'};
+const catImg=(k,w,h,alt='')=>`<img class="cat" src="img/${CATS[k]||'cat-'+k}.webp" style="width:${w}px;height:${h}px" alt="${esc(alt)}" ${alt?'':'aria-hidden="true"'}>`;
+function T(str,st='p',color,al){const parts=String(str).split('**');const h=parts.map((p,i)=>i%2?`<b>${esc(p)}</b>`:esc(p)).join('');const c=color||DEFC[st];return `<p class="tx ${st}${al==='c'?' c':''}"${c?` style="color:${CV(c)}"`:''}>${h}</p>`;}
+function AV(ini,col,s=40,dot){if(!ini)return `<span class="av empty" style="width:${s}px;height:${s}px;border-radius:${Math.round(s*.32)}px"></span>`;return `<span class="av" style="width:${s}px;height:${s}px;border-radius:${Math.round(s*.32)}px;background:${CV(col||'raw/c3a6ff')};font-size:${Math.round(s*.36)}px">${esc(ini)}${dot?'<i class="dot"></i>':''}</span>`;}
+const TGL=on=>`<button class="tgl${on?' on':''}" role="switch" aria-checked="${!!on}" data-tgl></button>`;
+const IB=(icon,k='w',s=44,attrs='')=>`<button class="ib ${k}" style="width:${s}px;height:${s}px" ${attrs} aria-label="${icon}">${IC(icon,Math.round(s*.45))}</button>`;
+const TAG=(t,k='p',ic)=>`<span class="tag ${k}">${ic?IC(ic,12):''}${esc(t)}</span>`;
+function BTN(text,k='p',ic,sm,hug){return `<button class="btn ${k}${sm?' sm':''}${hug?' hug':''}" data-act="${esc(text)}">${ic?IC(ic,sm?16:18):''}${esc(text)}</button>`;}
+let UID=0;
+function put(n){if(typeof n==='string')n=['T',n];const k=n[0];
+ switch(k){
+ case'T':return T(n[1],n[2],n[3],n[4]);
+ case'H':return `<div class="col" style="gap:6px"><h1 class="${n[3]||'t1'}">${esc(n[1])}</h1>${n[2]?T(n[2],'p','text/muted'):''}</div>`;
+ case'S':return `<section class="col" style="gap:10px"><div class="col" style="gap:4px"><h2 class="h tx">${esc(n[1])}</h2>${n[2]?T(n[2],'m'):''}</div>${n.slice(3).map(put).join('')}</section>`;
+ case'C':return `<div class="card ${n[1]||''}" style="gap:${n[2]??12}px">${n.slice(3).map(put).join('')}</div>`;
+ case'G':return `<div class="col" style="gap:${n[1]}px;${n[2]==='c'?'align-items:center;text-align:center':''}">${n.slice(3).map(put).join('')}</div>`;
+ case'RH':{const m=n[2];const st=m==='c'?'justify-content:center':m==='sb'?'justify-content:space-between':'';return `<div class="row${m==='eq'?' eq':''}" style="gap:${n[1]}px;${st}">${n.slice(3).map(put).join('')}</div>`;}
+ case'CH':{const sel=n[2]||[];const single=sel.length<=1?' data-single':'';return `<div class="chips"${single}>${n[1].map((l,i)=>`<button class="chip${sel.includes(i)?' on':''}${n[3]?' '+n[3]:''}" data-chip>${n[4]&&n[4][i]?IC(n[4][i],16):''}${esc(l)}</button>`).join('')}</div>`;}
+ case'TAGS':return `<div class="tags">${n[1].map(([t,kk,ic])=>TAG(t,kk,ic)).join('')}</div>`;
+ case'TAG':return TAG(n[1],n[2],n[3]);
+ case'I':{const id='f'+(UID++);const ph=n[5];const pw=/senha/i.test(n[1]||'');const inner=n[4]?`<textarea id="${id}" ${ph?`placeholder="${esc(n[2])}"`:''}>${ph?'':esc(n[2])}</textarea>`:`<input id="${id}" ${pw?'type="password"':''} ${ph?`placeholder="${esc(n[2])}"`:`value="${esc(n[2])}"`}>${pw?`<button data-eye aria-label="Mostrar senha" style="color:var(--sq-text-muted-2)">${IC('eye2',20)}</button>`:''}`;return `<label class="field" for="${id}">${n[1]?`<span class="s">${esc(n[1])}</span>`:''}<span class="inp${n[4]?' area':''}">${inner}</span>${n[3]?T(n[3],'m'):''}</label>`;}
+ case'B':return BTN(n[1],n[2],n[3],n[4],n[5]==='hug');
+ case'IB':return IB(n[1],n[2],n[3]||44,`data-act="@${n[1]}"`);
+ case'ICO':return n[1]==='badge/escudo-nivel'?LVL(3):`<span style="display:inline-grid;color:${CV(n[3])||'inherit'};flex:none">${IC(n[1],n[2]||22)}</span>`;
+ case'AV':return AV(n[1],n[2],n[3]);
+ case'TG':return TGL(n[1]);
+ case'HR':return '<div class="hr"></div>';
+ case'R':{const L=n[1];let left='';if(Array.isArray(L))left=AV(L[0],L[1],L[2]||40);else if(L)left=`<span class="icbox ${n[5]||'p'}">${IC(L,20)}</span>`;const R=n[4];let right='';if(R){if(R[0]==='TG')right=TGL(R[1]);else if(R[0]==='CHV')right=`<span style="color:var(--sq-text-muted)">${IC('right',18)}</span>`;else if(R[0]==='TAG')right=TAG(R[1],R[2],R[3]);else if(R[0]==='TX')right=T(R[1],R[2]||'m',R[3]);else if(R[0]==='IB')right=IB(R[1],R[2],R[3]||36,`data-act="@${R[1]}"`);else if(R[0]==='BS')right=BTN(R[1],R[2]||'s',R[3],1,1);else if(R[0]==='ICO')right=`<span style="color:${CV(R[3])}">${IC(R[1],R[2]||18)}</span>`;}
+  const nav=((window.NAV||{})[ST.cur]||{})[n[2]]!==undefined||(R&&R[0]==='CHV');return `<div class="rw${nav?' clickable':''}" data-act="${esc(n[2])}" ${nav?'role="button" tabindex="0"':''}>${left}<span class="mid">${T(n[2],'b')}${n[3]?T(n[3],'m'):''}</span>${right}</div>`;}
+ case'MSG':return `<div class="msg">${AV(n[1],n[2],38)}<div class="mid"><div class="row" style="gap:6px">${T(n[3],'b')}${n[5]?TAG(n[5],'m'):''}${T('agora','m')}</div>${T(n[4],'p')}</div></div>`;
+ case'LI':return `<div class="col" style="gap:10px">${n[1].map(it=>`<div class="li">${IC(n[2]||'check',18,CV(n[3]||'status/mint-text'))}${T(it,'p')}</div>`).join('')}</div>`;
+ case'ST':return `<div class="col" style="gap:16px">${n[1].map(([a,b,s],i)=>`<div class="st ${s}" style="animation-delay:${i*120}ms"><span class="dt"></span><span class="col" style="gap:2px">${T(a,'b')}${T(b,'m')}</span></div>`).join('')}</div>`;
+ case'Q':return `<div class="q" style="background:${CV(n[2]||'status/coral-soft')}">${T(n[1],'p')}</div>`;
+ case'BAR':return `<div class="bar col" style="gap:6px"><div class="row" style="justify-content:space-between">${T(n[1],'s')}${T(String(n[2]),'m')}</div><div class="trk" style="height:${n[4]||6}px"><i data-w="${Math.round(n[2]/n[3]*100)}" style="background:${CV(n[5]||'status/mint')}"></i></div></div>`;
+ case'IMG':return catImg(n[1],n[2],n[3]);
+ case'OR':return `<div class="row" style="gap:12px;margin:2px 20px"><span class="hr" style="flex:1"></span><span class="s">OU</span><span class="hr" style="flex:1"></span></div>`;
+ case'COMP':return `<div class="row" style="gap:8px;padding:7px;border-radius:29px;background:var(--sq-surface-white);border:1px solid var(--sq-border-default);box-shadow:var(--sq-shadow2)"><input id="msgin" style="flex:1;padding:0 12px;height:44px;font-size:16px" placeholder="Mensagem em #geral" value="${esc(n[1]||'')}">${IB('send','o',44,'data-act="@send"')}</div>`;
+ case'HTML':return typeof n[1]==='function'?n[1]():n[1];
+ }return '';}
+/* ===== estado e navegação ===== */
+const ST={cur:'01',hist:[],theme:(function(){try{return localStorage.getItem('sq5-theme')||'light'}catch(e){return 'light'}})(),voiceSeen:false,chat:[],sent:0,booted:false};
+const TABROOT={1:'06',2:'07',3:'23'};
+function screenHTML(id){const s=SCR[id];if(!s)return '';if(s.html)return s.html();
+ const tabsH=s.tab?116:0;let top=s.top||84;if(s.back)top=s.top||112;if(s.hd)top=s.top||124;
+ let h=`<div class="page" style="padding-top:${top}px;padding-bottom:${tabsH?tabsH+20:44}px"><div class="col" style="gap:${s.gap??24}px">${(s.b||[]).map(put).join('')}</div>${s.f?`<div class="foot">${s.f.map(put).join('')}</div>`:''}</div>`;
+ if(s.back)h+=`<button class="backb" data-back aria-label="Voltar">${IC('back',22)}</button>`;
+ if(s.backTo)h+=`<button class="backb" data-act="@backto" aria-label="Voltar para o squad">${IC('back',22)}</button>`;
+ if(s.hd)h+=`<div class="hdr${s.hdi?' small':''}" style="left:${s.back||s.backTo?56:20}px">${s.hdi?IC(s.hdi,18):''}<span>${esc(s.hd)}</span></div>`;
+ if(s.hdr)h+=`<div class="hdrr">${IB(s.hdr[0],s.hdr[1],44,`data-act="@${s.hdr[0]}"`)}</div>`;
+ return h;}
+function tabsHTML(t){return `<nav class="tabs" aria-label="Navegação">${[['Início','home'],['Squads','cat'],['Perfil','user']].map(([l,ic],i)=>`<button data-tab="${i+1}" aria-current="${t===i+1}"><span class="g">${ic==='cat'?logoMono(36):ic==='home'?homeFill():IC('user',30)}</span>${l}</button>`).join('')}</nav>`;}
+const homeFill=()=>`<svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></svg>`;
+const logoMono=(sz)=>`<svg width="${sz}" height="${Math.round(sz*40/42)}" viewBox="0 0 42 40" aria-hidden="true"><path d="M5.9 6.4c-.16-.89.27-1.12 1.31-.7l6.73 3.83c4.7-1.77 9.4-1.77 14.11 0l6.73-3.83c1.04-.42 1.47-.19 1.31.7l-1.4 10.79c.88 3.23.47 6.61-1.23 10.15-2.02 4.33-6.18 8.05-12.47 11.18-6.29-3.13-10.45-6.85-12.47-11.18-1.7-3.54-2.1-6.92-1.23-10.15z" fill="currentColor"/><path d="M11.9 19.3c1.75-1.2 3.6-1.28 5.57-.24.88.47 1.18 1.17.9 2.11-.43 1.46-1.55 2.27-3.36 2.42-1.64-.15-2.84-.88-3.6-2.18-.44-.73-.28-1.43.49-2.11zM30.1 19.3c-1.75-1.2-3.6-1.28-5.57-.24-.88.47-1.18 1.17-.9 2.11.43 1.46 1.55 2.27 3.36 2.42 1.64-.15 2.84-.88 3.6-2.18.44-.73.28-1.43-.49-2.11z" fill="var(--sq-tab-bg)"/></svg>`;
+function render(dir){const scr=$('#scr');const s=SCR[ST.cur];gxStop();
+ let html='';
+ if(s.sheet){const ud=SCR[s.under]&&SCR[s.under].dark;html+=`<div class="view under${ud?' dark':''}" aria-hidden="true">${screenHTML(s.under)}</div>${SCR[s.under]&&SCR[s.under].tab?tabsHTML(SCR[s.under].tab):''}<div class="scrim" data-back></div><div class="sheet" role="dialog" aria-label="${esc(s.n)}"><span class="grab"></span>${(s.b||[]).map(put).join('')}${s.f?`<div class="col" style="gap:10px">${s.f.map(put).join('')}</div>`:''}</div>`;}
+ else{html+=`<div class="view ${dir==='b'?'enterb':'enter'}${s.dark?' dark':''}" id="view">${screenHTML(ST.cur)}</div>`;if(s.tab)html+=tabsHTML(s.tab);}
+ const dark=s.dark||ST.cur==='01'&&false;
+ scr.innerHTML=html+`<div class="sbar${s.dark||(s.sheet&&SCR[s.under].dark)?' light':''}"><span>9:41</span><span class="ico">${SBI}</span></div><div class="island"></div><div class="hbar"></div>`;
+ bindScreen();$$('.map button').forEach(b=>b.setAttribute('aria-current',b.dataset.to===ST.cur));
+ requestAnimationFrame(()=>$$('.trk i').forEach(i=>i.style.width=i.dataset.w+'%'));
+ if(s.sheet&&s.under==='08c')renderChat();
+ if(HOOK[ST.cur])HOOK[ST.cur]();
+ history.replaceState(null,'','#'+ST.cur);}
+const SBI=`<svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.6c2.3 0 4.4.9 6 2.4l1.3-1.3A10.4 10.4 0 0 0 8 .8 10.4 10.4 0 0 0 .7 3.7L2 5a8.6 8.6 0 0 1 6-2.4zm0 3.6c1.3 0 2.5.5 3.4 1.3l1.3-1.3A6.6 6.6 0 0 0 8 4.4c-1.8 0-3.4.7-4.7 1.8l1.3 1.3c.9-.8 2.1-1.3 3.4-1.3zM8 9.8 10 7.8a2.9 2.9 0 0 0-4 0z"/></svg><svg width="26" height="12" viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="19" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="1.6" height="4" rx=".8" fill="currentColor" opacity=".5"/></svg>`;
+function go(id,opts={}){if(!SCR[id])return;if(id===ST.cur)return;if(!opts.replace)ST.hist.push(ST.cur);ST.cur=id;render(opts.dir);}
+function back(){if(!ST.hist.length){const t=SCR[ST.cur].tab||1;const r=TABROOT[t];if(r&&r!==ST.cur){ST.cur=r;render('b');}else if(ST.cur!=='06'){ST.cur='06';render('b');}return;}ST.cur=ST.hist.pop();render('b');}
+function tab(n){const id=TABROOT[n];ST.hist=[];ST.cur=id;render();}
+function toast(title,sub,opts={}){$$('.toast').forEach(t=>t.remove());const el=document.createElement('div');el.className='toast'+(opts.to?' go':'');el.setAttribute('role','status');el.innerHTML=`<span class="ti">${IC(opts.icon||'star',18)}</span><span>${title?`<b>${esc(title)}</b>`:''}${sub?`<small>${esc(sub)}</small>`:''}</span>`;$('#scr').appendChild(el);if(opts.to)el.onclick=()=>{el.remove();go(opts.to);};const tm=setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),320);},opts.ms||2600);el._tm=tm;}
+let LATER=[];function later(fn,ms){const cur=ST.cur;LATER.push(setTimeout(()=>{if(ST.cur===cur)fn();},ms));}
+function clearLater(){LATER.forEach(clearTimeout);LATER=[];}
+function applyTheme(){const t=ST.theme,o=t==='light'?'dark':'light';[document.documentElement,document.body,document.querySelector('.phone'),document.getElementById('scr')].forEach(el=>{if(!el)return;el.classList.remove('th-'+o);el.classList.add('th-'+t);el.setAttribute('data-sqt',t);});document.documentElement.style.colorScheme=t;}
+function setTheme(t){ST.theme=t;try{localStorage.setItem('sq5-theme',t)}catch(e){}applyTheme();if(!window.__thObs){window.__thObs=1;try{new MutationObserver(()=>{const h=document.documentElement;if(!h.classList.contains('th-'+ST.theme))applyTheme();}).observe(document.documentElement,{attributes:true,attributeFilter:['class']})}catch(e){}}$$('[data-sqtheme]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sqtheme===t));}
+function confetti(){const c=document.createElement('canvas');c.className='conf';const scr=$('#scr');scr.appendChild(c);const W=c.width=393,H=c.height=852;const x=c.getContext('2d');const cols=['#FF9A3C','#B14CF3','#3DE0A6','#FFD166','#FF4FA3'];const P=Array.from({length:110},()=>({x:W/2+(Math.random()-.5)*80,y:H*.38,vx:(Math.random()-.5)*9,vy:-Math.random()*11-4,s:4+Math.random()*5,c:cols[Math.random()*5|0],r:Math.random()*6,vr:(Math.random()-.5)*.3}));let t=0;const f=()=>{x.clearRect(0,0,W,H);for(const p of P){p.vy+=.32;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore();}if(++t<130)requestAnimationFrame(f);else c.remove();};if(!matchMedia('(prefers-reduced-motion: reduce)').matches)f();}
+function countUp(el,from,to,ms=900,fmt=v=>v){const t0=performance.now();const st=t=>{const p=Math.min(1,(t-t0)/ms);const e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(from+(to-from)*e));if(p<1)requestAnimationFrame(st);};requestAnimationFrame(st);}
+/* ===== ligações ===== */
+function bindScreen(){clearLater();const scr=$('#scr');
+ $$('[data-back]',scr).forEach(b=>b.onclick=back);
+ $$('[data-tab]',scr).forEach(b=>b.onclick=()=>tab(+b.dataset.tab));
+ $$('[data-tgl]',scr).forEach(b=>b.onclick=e=>{e.stopPropagation();b.classList.toggle('on');b.setAttribute('aria-checked',b.classList.contains('on'));});
+ $$('[data-chip]',scr).forEach(b=>b.onclick=e=>{e.stopPropagation();const g=b.parentElement;if(g.hasAttribute('data-single')){$$('.chip',g).forEach(x=>x!==b&&x.classList.remove('on'));b.classList.add('on');}else b.classList.toggle('on');b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop');if(CHIPHOOK[ST.cur])CHIPHOOK[ST.cur](b);});
+ $$('[data-eye]',scr).forEach(b=>b.onclick=e=>{e.preventDefault();const i=b.parentElement.querySelector('input');i.type=i.type==='password'?'text':'password';});
+ $$('[data-act]',scr).forEach(el=>{el.addEventListener('click',e=>{const k=el.dataset.act;const m=(NAV[ST.cur]||{})[k]??NAVG[k];if(m===undefined)return;e.stopPropagation();run(m);});el.addEventListener('keydown',e=>{if(e.key==='Enter')el.click();});});}
+function run(m){if(typeof m==='function')return m();if(typeof m==='string'){if(m==='<')return back();return go(m);}if(Array.isArray(m)){const[to,t,sub,ic]=m;if(t)toast(t,sub,{icon:ic});if(to==='<')back();else if(to)go(to);}}
+
+let gxRAF=null,gxT=null;
+function bootHTML(){if(ST.booted||matchMedia('(prefers-reduced-motion: reduce)').matches)return '';return `<div class="boot" id="boot" aria-hidden="true"><div class="bl">${logo(48)}squad</div><div class="bar2"><i id="bootbar"></i></div><small>CARREGANDO SQUAD · <b id="bootpct">0%</b></small><small class="ps">PRESS START</small></div>`;}
+function gxStop(){if(gxRAF)cancelAnimationFrame(gxRAF);gxRAF=null;if(gxT)clearInterval(gxT);gxT=null;const p=document.querySelector('.phone');if(p)p.onpointermove=null;}
+function gxInit(){gxStop();const w=$('#w01');if(!w)return;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const boot=$('#boot');if(boot){$('#scr').appendChild(boot);ST.booted=true;w.style.setProperty('--bd','1350ms');const t0=performance.now();const bar=$('#bootbar'),pc=$('#bootpct');const step=t=>{const p=Math.min(1,(t-t0)/1150);const e=1-Math.pow(1-p,3);bar.style.width=e*100+'%';pc.textContent=Math.round(e*100)+'%';if(p<1)requestAnimationFrame(step);else setTimeout(()=>{boot.classList.add('done');setTimeout(()=>boot.remove(),500);},180);};requestAnimationFrame(step);boot.onclick=()=>boot.classList.add('done');}
+ else w.style.setProperty('--bd','0ms');
+ const on=$('#wOn');if(on){let n=248;gxT=setInterval(()=>{n+=Math.round(Math.random()*6-2);on.textContent=n;},1600);}
+ const st=$('#stage');const ph=document.querySelector('.phone');if(st&&!reduce)ph.onpointermove=e=>{const r=st.getBoundingClientRect();const x=((e.clientX-r.left)/r.width-.5)*2,y=((e.clientY-r.top)/r.height-.5)*2;st.style.setProperty('--px',Math.max(-1,Math.min(1,x)).toFixed(3));st.style.setProperty('--py',Math.max(-1,Math.min(1,y)).toFixed(3));};
+ const cv=w.querySelector('canvas');if(!cv||reduce)return;const ctx=cv.getContext('2d');const dpr=Math.min(2,devicePixelRatio||1);const W=393,H=852;cv.width=W*dpr;cv.height=H*dpr;ctx.scale(dpr,dpr);
+ const cols=['#A45CFF','#FF4FA3','#FFD166','#3DE0A6','#FF9A3C'];
+ const P=Array.from({length:52},()=>({x:Math.random()*W,y:Math.random()*H,s:1+Math.random()*3,v:.25+Math.random()*.7,c:cols[Math.random()*cols.length|0],k:Math.random()<.25?'+':(Math.random()<.5?'sq':'dot'),a:.3+Math.random()*.55,w:Math.random()*6.28}));
+ const tick=()=>{ctx.clearRect(0,0,W,H);for(const p of P){p.y-=p.v;p.w+=.02;p.x+=Math.sin(p.w)*.3;if(p.y<-10){p.y=H+10;p.x=Math.random()*W;}ctx.globalAlpha=p.a*(p.y<H*.3?.6:1);ctx.fillStyle=p.c;ctx.strokeStyle=p.c;if(p.k==='sq')ctx.fillRect(p.x,p.y,p.s*1.6,p.s*1.6);else if(p.k==='+'){ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(p.x-p.s*1.6,p.y);ctx.lineTo(p.x+p.s*1.6,p.y);ctx.moveTo(p.x,p.y-p.s*1.6);ctx.lineTo(p.x,p.y+p.s*1.6);ctx.stroke();}else{ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.28);ctx.fill();}}ctx.globalAlpha=1;if(document.body.contains(cv))gxRAF=requestAnimationFrame(tick);};gxRAF=requestAnimationFrame(tick);}
+
+/* ===== telas (espelham o Figma "App - mobile") ===== */
+const CHV=['CHV'],T1=['TG',1],T0=['TG',0],OK=['ICO','check',20,'brand/violet-text'];
+const TAGQ=['Jogou bem','Respeitoso(a)','Comunicativo(a)','Estratégico(a)','Gente boa','Calmo(a) sob pressão','Pontual'];
+const STP=[['Recebida','Sua denúncia chegou.','d'],['Evidências organizadas','A IA juntou chat e histórico para a moderação. Ela não decide nada.','a'],['Em revisão por uma pessoa','Um(a) moderador(a) analisa o caso.','p'],['Resultado','Você recebe o resultado aqui.','p']];
+const ME=['SA','raw/8b6cff'];
+function lobbyCard(o){return `<button class="card lobbyc" data-act="${esc(o.title)}" style="gap:12px;padding:13px 13px 17px;text-align:left;width:100%">
+ <span class="banr" style="background-position:${o.pos||'50% 45%'}"><span style="position:absolute;left:12px;top:12px;max-width:calc(100% - 24px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:5px 10px;border-radius:12.5px;background:#0E091C;color:#fff;font:700 12px var(--sq-font)">${o.pill}</span><span style="position:absolute;left:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:12.5px;background:#FF9A3C;color:#2A1000;font:700 12px var(--sq-font);box-shadow:0 4px 12px rgba(255,154,60,.35)">${IC('spark',12)}${o.match}% combina</span></span>
+ <span style="padding:0 4px;display:flex;flex-direction:column;gap:10px">${T(o.title,'h')}<span class="tags">${o.tags.map(([t,k,i])=>TAG(t,k,i)).join('')}</span><span class="row" style="gap:12px">${o.av.map(a=>AV(a[0],a[1],30)).join('')}${Array.from({length:5-o.av.length},()=>AV(null,null,30)).join('')}<span style="margin-left:auto;font:400 13px/16px var(--sq-font);color:var(--sq-text-muted)">Procura:<br><b style="color:var(--sq-text-primary)">${o.want}</b></span></span></span></button>`;}
+const L1={title:'Chill de quinta à noite',pill:'Valorant · Não ranqueado',match:100,tags:[['Prata–Ouro','p'],['Chill','p'],['Voz','p'],['Squad seguro','m','shieldck']],av:[['LU','raw/c3a6ff'],['RA','raw/5ba4ff']],want:'Qualquer',pos:'52% 40%'};
+const L2={title:'Ranqueada tranquila, foco em call',pill:'Valorant · Competitivo',match:94,tags:[['Ouro–Platina','p'],['Equilibrado','p'],['Voz','p'],['Squad seguro','m','shieldck']],av:[['KA','raw/7bdff2'],['DU','raw/ffd166'],['TH','raw/3de0a6']],want:'Duelista',pos:'8% 45%'};
+const L3={title:'Squad só de minas e pessoas não binárias',pill:'Valorant · Competitivo',match:91,tags:[['Prata–Ouro','p'],['Chill','p'],['Voz','p'],['Squad seguro','m','shieldck'],['Só minas e NB','b']],av:[['MA','raw/ff8fb0'],['LU','raw/c3a6ff']],want:'Qualquer',pos:'96% 40%'};
+function rail(active){const t=(ini,bg,badge,bc,on)=>`<button class="srv${active===ini?' on':''}" data-act="srv-${ini}" style="position:relative;width:48px;height:48px;border-radius:16px;background:${bg};color:#fff;font:700 15px var(--sq-font-d);box-shadow:0 6px 14px rgba(0,0,0,.25)">${ini}${badge?`<span style="position:absolute;right:-5px;bottom:-5px;padding:2px 4px;border-radius:6px;background:${bc};color:#1A0933;font:700 8px var(--sq-font-d);border:2px solid var(--sq-surface-white)">${badge}</span>`:''}${on?'<span style="position:absolute;right:-3px;bottom:-3px;width:14px;height:14px;border-radius:50%;background:#3DE0A6;border:3px solid var(--sq-surface-white)"></span>':''}</button>`;
+ return `<div style="position:absolute;left:0;top:54px;bottom:116px;width:72px;display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:12px;background:var(--sq-surface-white);border-right:1px solid var(--sq-border-default);z-index:3"><button data-act="@home" aria-label="Voltar ao início" title="Início" style="width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--sq-brand-violet-soft);transition:transform .15s" onmouseenter="this.style.transform='scale(1.06)'" onmouseleave="this.style.transform=''">${logo(30)}</button><span style="width:32px;height:2px;border-radius:1px;background:var(--sq-border-default)"></span>${t('RT','#5B21B6',0,0,1)}${t('FD','#5B21B6','LOL','#FFD166')}${t('SM','#5B21B6','VAL','#FF6B7A')}${t('CQ','#5B21B6','VAL','#FF6B7A')}<span style="width:32px;height:2px;border-radius:1px;background:var(--sq-border-default)"></span>
+ <button data-act="Encontrar squad" style="display:flex;flex-direction:column;align-items:center;gap:6px;font:700 9px/11px var(--sq-font);color:var(--sq-text-muted)"><span style="width:48px;height:48px;border-radius:24px;display:grid;place-items:center;background:${active==='find'?'#14B886':'var(--sq-glass)'};border:1px solid var(--sq-border-default);color:${active==='find'?'#fff':'#14B886'}">${IC('compass',22)}</span>Encontrar<br>squad</button>
+ <button data-act="Criar squad" style="display:flex;flex-direction:column;align-items:center;gap:6px;font:700 9px/11px var(--sq-font);color:var(--sq-text-muted)"><span style="width:48px;height:48px;border-radius:24px;display:grid;place-items:center;background:var(--sq-glass);border:1px solid var(--sq-border-default);color:var(--sq-brand-violet-dark)">${IC('plus',22)}</span>Criar squad</button></div>`;}
+const chRow=(icon,label,act,extra='',col)=>`<button class="rw clickable" data-act="${act}" style="padding:7px 8px;gap:10px;color:${col||'var(--sq-text-primary)'}">${IC(icon,18)}<span style="flex:1;font:${col?'700':'400'} 15px var(--sq-font)">${label}</span>${extra}</button>`;
+const SCR={
+'01':{n:'Boas-vindas',html:()=>{const w='Ache o time que você quer'.split(' ');return `<div class="w01" id="w01"><canvas aria-hidden="true"></canvas><div class="floor" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div>
+ <div class="lg in" style="--sq-d:0">${logo(38)}squad</div>
+ <span class="pill in" style="--sq-d:1">Feito para jogar em paz</span>
+ <h1>${w.map((x,i)=>`<span class="wd" style="--sq-i:${i}">${x}</span> `).join('')}<span class="wd" style="--sq-i:${w.length}"><em class="glitch" data-t="jogar!">jogar!</em></span></h1>
+ <p class="sub in" style="--sq-d:6">Combine por estilo de jogo,<br>não só por rank.</p>
+ <div class="stage in" id="stage" style="--sq-d:4"><i class="hc tl"></i><i class="hc tr"></i><i class="hc bl"></i><i class="hc br"></i><span class="ring"></span><span class="ring r2"></span><span class="glow"></span>
+  <div class="ach"><i>${IC('star',13)}</i>Conquista: primeiro elogio</div>
+  <div class="catw"><img src="img/cat-wave2.webp" alt="Mascote do Squad, um gatinho gamer de fone, acenando"></div>
+  <div class="fc m" style="left:0;top:34px;--sq-r:-9deg"><span class="row" style="gap:10px">${IC('shieldck',20)}<span><b>Squad seguro</b><small style="color:#0B7A58">Você no controle</small></span></span></div>
+  <div class="fc" style="right:0;bottom:56px;--sq-r:-7deg"><span class="row" style="gap:10px">${AV('DU','raw/ffd166',32)}<span><b>dudz te elogiou</b><small>Calma sob pressão</small></span></span><span class="xp">+2 XP</span></div></div>
+ <div class="online in" style="--sq-d:7"><span class="dot"></span><span><b id="wOn">248</b> squads abertos agora</span></div>
+ <div class="acts in" style="--sq-d:8"><button class="btn p cta" data-act="Criar conta">Criar conta ${IC('right',18)}</button><button class="btn s" data-act="Já tenho conta">Já tenho conta</button></div>
+ <p class="terms">Ao continuar, você aceita os<br><u>Termos e a Política de Privacidade</u>.</p></div>${bootHTML()}`;}},
+'02':{n:'Entrar',back:1,gap:20,b:[['H','Bom te ver de novo!','Entre com a conta que você já usa para jogar.'],['I','E-mail ou número de telefone','sak@gmail.com'],['G',8,0,['I','Senha','••••••••'],['T','Esqueceu sua senha?','m']],['OR'],['RH',12,'eq',['B','Google','s','google'],['B','Discord','s','discord']],['B','Entrar','p']]},
+'03':{n:'Criar conta',back:1,gap:18,b:[['H','Crie sua conta','Leva um minuto. Depois você monta seu perfil de jogo.'],['T','Criar conta com:','s'],['RH',12,'eq',['B','Google','s','google'],['B','Discord','s','discord']],['OR'],['I','E-mail ou número de telefone','sak@gmail.com','Só para entrar e recuperar a conta. Nunca aparece no perfil.'],['G',8,0,['I','Senha','senhaforte'],['HTML','<div class="trk" style="height:6px;border-radius:3px;background:var(--sq-surface-2);overflow:hidden"><i id="pwbar" data-w="100" style="display:block;height:100%;background:var(--sq-status-mint);border-radius:3px;width:0;transition:width .6s"></i></div>'],['T','Força da senha: Forte. Use 8 caracteres ou mais.','m']],['I','Data de nascimento','07/06/1996','Nunca aparece no perfil. Serve para separar squads por faixa de idade.']],f:[['B','Criar conta','p'],['T','Ao criar a conta, você concorda com os Termos e a Política de Privacidade.','m',null,'c']]},
+'31':{n:'Conta de menor (13–17)',back:1,gap:20,b:[['G',12,'c',['IMG','wave2',150,150]],['H','Sua conta tem proteção extra','Você tem 15 anos. Algumas coisas funcionam diferente para manter você seguro(a).','t2'],['C','w',16,['R','squad','Squads só com pessoas de 13 a 17','Você não cai com adultos, nem eles com você.',null,'p'],['R','mic','Voz só com a sua faixa de idade','E a proteção de voz já vem ligada.',null,'m'],['R','eye','Perfil mais reservado','Pronomes e jogos aparecem só para quem já jogou com você.',null,'o'],['R','flag','Denúncias com prioridade','Casos com menores são revisados primeiro.',null,'c']]],f:[['B','Continuar','p'],['T','Ficou com dúvida? Mostre esta tela para alguém responsável por você.','m',null,'c']]},
+'32':{n:'Idade mínima',back:1,top:150,gap:16,b:[['G',14,'c',['IMG','think',170,170],['T','Ainda não dá para entrar','t2',null,'c'],['T','O Squad é para quem tem 13 anos ou mais. Quando chegar a hora, a gente te espera aqui.','p','text/muted','c']],['C','soft',8,['RH',10,'f',['ICO','info',18,'text/muted'],['T','Seus dados não foram salvos.','m']]]],f:[['B','Voltar ao início','s']]},
+'04':{n:'Nick e jogos',back:1,gap:24,b:[['H','Quem é você no jogo?','Escolha um nick e os jogos que você joga. Dá para mudar depois.'],['I','Nick','sak','Não precisa ser o mesmo nick dos jogos. Ninguém vê seu nome real.'],['S','Seus pronomes','Opcional. Você escolhe depois se aparecem no perfil.',['CH',['ela/dela','ele/dele','elu/delu','Prefiro não dizer','Outro'],[0]]],['S','Seus jogos',null,['CH',['Valorant','League of Legends','Fortnite','Rocket League','CS:Go','Overwatch 2','Dota 2','Outros'],[0,5]]]],f:[['B','Continuar','p']]},
+'05':{n:'Pacto do squad',back:1,gap:16,b:[['RH',8,'f',['G',6,0,['H','Pacto do squad!','Quatro combinados que todo o pessoal aceita para jogar aqui.','t2']],['IMG','front',96,110]],['C','w',0,['R','heart','Respeito vem antes do rank','Pode discordar da call. Não pode ofender quem fez.',null,'o']],['C','w',0,['R','shield','Ninguém é alvo','Comentário sobre gênero, voz, raça, corpo ou sotaque é falta grave.',null,'o']],['C','w',0,['R','star','Elogie quem jogou junto','Elogios constroem a reputação de todo mundo.',null,'o']],['C','w',0,['R','flag','Viu, denunciou','Toda denúncia é revisada por uma pessoa, e você recebe o resultado.',null,'o']],['HTML','<button class="card pri row" id="pact" aria-pressed="true" style="justify-content:space-between;padding:16px 17px;gap:12px"><span class="b">Li e aceito o pacto do squad</span><span id="pactck" style="width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sq-brand-violet);color:#fff">'+IC('check',14)+'</span></button>']],f:[['B','Entrar no Squad','p']]},
+'06':{n:'Início',tab:1,html:()=>`<div class="page" style="padding-top:62px;padding-bottom:136px"><div class="col" style="gap:20px">
+ <div class="row" style="justify-content:space-between"><div class="row" style="gap:10px">${logo(34)}<span class="hd">Oi, sak!</span></div><div class="row" style="gap:10px">${IB(ST.theme==='dark'?'moon':'sun','w',44,'data-act="@theme"')}<span style="position:relative">${IB('bell','w',44,'data-act="@bell"')}<i style="position:absolute;right:10px;top:9px;width:9px;height:9px;border-radius:50%;background:#FF5C8A;border:2px solid var(--sq-surface-white)"></i></span><button data-act="@me" style="border-radius:50%">${AV('SA','raw/8b6cff',44)}</button></div></div>
+ <div class="heroF" style="position:relative;height:210px;border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#5C4A7E 0%,#B14CF3 52%,#7C3AED 100%);box-shadow:0 16px 34px rgba(160,60,230,.3)"><img class="cat" src="img/cat-happy2.webp" alt="" aria-hidden="true" style="position:absolute;left:206px;top:29px;width:149px;height:150px;object-fit:contain"><p style="position:absolute;left:15px;top:26px;width:219px;margin:0;font:600 12px/16px var(--sq-font-d);letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.85)">Seu jeito de jogar</p><h2 style="position:absolute;left:15px;top:50px;width:219px;margin:0;font:700 30px/33px var(--sq-font-d);letter-spacing:.3px;color:#fff">Venha e ache o seu squad!</h2><button class="btn hug" data-act="Encontrar squad" style="position:absolute;left:15px;top:135px;width:201px;height:52px;padding:0;justify-content:center;gap:7px;border-radius:26px;background:#fff;color:#5B21B6;font:700 16px var(--sq-font);box-shadow:0 8px 20px rgba(60,10,120,.25)">Encontrar squad ${IC('right',18)}</button></div>
+ ${put(['C','pri',0,['R','heart','Conte seu estilo','Ache squads que combinam mais com você',CHV,'p']])}
+ ${put(['C','mint',0,['R','shieldck','Sua denúncia teve resultado','R-2041 · ontem',CHV,'m']])}
+ <div class="card" style="gap:12px"><div class="row" style="gap:14px">${LVL(3)}<span class="col" style="flex:1;gap:2px">${T('Reputação','m')}${T('Boa companhia','h')}</span><span class="s"><b id="xp62">62</b><span class="m">/100</span></span></div><div class="trk" style="height:10px;border-radius:5px;background:var(--sq-surface-2);overflow:hidden"><i data-w="62" style="display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#FF9A3C,#14B886);transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></i></div>${T('38 pontos para o nível 4: Referência','m')}<div class="tags">${TAG('Respeitoso(a) · 14','m')}${TAG('Comunicativo(a) · 12','m')}${TAG('Jogou bem · 10','m')}</div></div>
+ <section class="col" style="gap:10px"><div class="row" style="justify-content:space-between"><h2 class="h tx">Jogaram bem com você</h2><button class="l" data-act="Ver todos" style="color:var(--sq-brand-orange-text)">Ver todos</button></div><div class="card" style="gap:16px">${[['DU','raw/ffd166','dudz','ela/dela · você elogiou: Calma sob pressão'],['KA','raw/7bdff2','kaiNoturno','ela/dela · você elogiou: Comunicativa'],['LU','raw/c3a6ff','luzinha','você elogiou: Gente boa']].map(([i,c,n,s])=>`<div class="rw">${AV(i,c,42,1)}<span class="mid">${T(n,'b')}${T(s,'m')}</span>${BTN('Convidar','s',null,1,1)}</div>`).join('')}</div></section>
+ <section class="col" style="gap:10px"><h2 class="h tx">Squads abertos agora</h2>${lobbyCard(L1)}${lobbyCard(L2)}</section></div></div>`},
+'33':{n:'Conte seu estilo',back:1,gap:22,b:[['H','Conte seu estilo','Ajuda a achar squads que combinam com você. Leva 30 segundos.'],['S','Clima',null,['CH',['Chill','Equilibrado','Tryhard'],[1]]],['S','Comunicação',null,['CH',['Voz','Texto','Só pings'],[0]]],['S','Valorant · funções',null,['CH',['Duelista','Iniciador','Controlador','Sentinela'],[2,3]]],['S','Valorant · rank','Opcional. Só aparece no perfil se você quiser.',['CH',['Ferro','Bronze','Prata','Ouro','Platina','Diamante','Imortal'],[3]]]],f:[['B','Salvar','p'],['B','Agora não','g']]},
+'52':{n:'Convite para squad',sheet:1,under:'06',b:[['RH',12,'f',['AV','KA','raw/7bdff2',52],['G',2,0,['T','kaiNoturno te convidou','h'],['T','Vocês jogaram juntos ontem · nível 4','m']]],['C','w',12,['T','Ranqueada tranquila, foco em call','h'],['TAGS',[['Valorant','p'],['Ouro–Platina','p'],['Equilibrado','p'],['Voz','p'],['Squad seguro','m','shieldck']]],['T','4/5 no squad · procura Controlador','m']],['C','mint',8,['RH',10,'f',['ICO','check',18,'status/mint-text'],['T','Combina com seu estilo: mesmo clima e você joga de Controlador.','m','status/mint-text']]]],f:[['B','Entrar no squad','p'],['B','Agora não','g'],['T','Recusar não avisa ninguém.','m',null,'c']]},
+'07':{n:'Seus squads e call',tab:2,html:()=>`${rail('RT')}<div style="position:absolute;left:72px;right:0;top:54px;bottom:116px;overflow:auto;padding:14px 14px 20px" class="col">
+ <div style="border-radius:22px;padding:16px;background:linear-gradient(135deg,#5B21B6,#7C3AED);color:#fff;display:flex;flex-direction:column;gap:8px;position:relative"><span style="align-self:flex-start;padding:5px 10px;border-radius:12px;background:#0E091C;font:700 12px var(--sq-font)">Valorant · Competitivo</span><button data-act="@more" aria-label="Gerenciar squad" style="position:absolute;right:12px;top:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center">${IC('more',18)}</button><b style="font:700 18px/22px var(--sq-font-d)">Ranqueada tranquila, foco em call</b><span style="font-size:13px;opacity:.85">4/5 no squad · Ouro–Platina</span><span class="row" style="gap:6px"><span class="tag" style="background:rgba(14,9,28,.55);color:#fff">${IC('shieldck',12)}Squad seguro</span><span class="tag" style="background:rgba(14,9,28,.55);color:#fff">Equilibrado</span></span></div>
+ <p class="k" style="margin:18px 6px 4px">Informações</p>${chRow('book','regras','#regras')}
+ <p class="k" style="margin:14px 6px 4px">Bate-papo</p>${chRow('hash','geral','#geral')}${chRow('hash','clipes','#clipes')}
+ <p class="k" style="margin:14px 6px 4px">Voz</p>${chRow('vol','Call do squad','Call do squad','<b style="font-size:13px">3</b>','var(--sq-status-mint-text)')}
+ <div class="col" style="gap:8px;padding:4px 0 8px 38px">${[['KA','raw/7bdff2','kaiNoturno'],['DU','raw/ffd166','dudz'],['SA','raw/8b6cff','sak']].map(([i,c,n])=>`<span class="row" style="gap:8px">${AV(i,c,22)}<span style="font-size:14px">${n}</span></span>`).join('')}</div>
+ ${chRow('vol','Sala de espera','Sala de espera')}
+ <div class="clickable" data-act="Call do squad" role="button" tabindex="0" style="margin-top:auto;border-radius:18px;padding:12px;background:var(--sq-status-mint-card);border:1px solid var(--sq-status-mint);display:flex;align-items:center;gap:10px"><span style="color:var(--sq-status-mint-text)">${IC('vol',18)}</span><span class="col" style="flex:1"><b style="font-size:14px;color:var(--sq-status-mint-text)">Na call</b><span class="m">Call do squad</span></span>${IB('mic','w',36,'data-act="@mic"')}${IB('exit','c',36,'data-act="@leave"')}</div></div>`},
+'08f':{n:'Encontrar squad',tab:2,html:()=>`${rail('find')}<div style="position:absolute;left:72px;right:0;top:54px;bottom:116px;overflow:auto;padding:18px 14px 20px" class="col">
+ <div class="row" style="justify-content:space-between"><span class="hd">Encontrar squad</span>${IB('filter','w',44,'data-act="@filter"')}</div>${T('Escolha pelo jogo e pelo clima. Ao entrar, o squad vai para a sua coluna, com chat e call.','m')}
+ <div class="chips" data-single style="margin-top:14px;flex-wrap:nowrap;overflow:auto;scrollbar-width:none"><button class="chip" data-chip>Todos</button><button class="chip on" data-chip>Valorant</button><button class="chip" data-chip style="white-space:nowrap">League of Legends</button></div>
+ <div class="chips" style="margin-top:10px"><button class="chip on m" data-chip>${IC('shieldck',16)}Squad seguro</button><button class="chip" data-chip>Só minas e NB</button></div>
+ <div class="chips" data-single style="margin-top:10px"><button class="chip" data-chip>Chill</button><button class="chip" data-chip>Equilibrado</button><button class="chip" data-chip>Tryhard</button></div>
+ <div class="col" style="gap:14px;margin-top:18px">${lobbyCard(L2)}${lobbyCard(L3)}</div>
+ <button class="btn s" data-act="Criar meu squad" style="margin-top:16px">${IC('plus',18)}Criar meu squad</button></div>`},
+'08c':{n:'Squad: chat',tab:2,backTo:'07',hd:'geral',hdi:'hash',hdr:['shield','c'],gap:18,b:[['T','Você entrou no squad. Lembrete do pacto: respeito vem antes do rank.','m',null,'c'],['HTML','<div class="col" id="chat" style="gap:18px"></div>']],f:[['COMP',''],['HTML',`<div class="clickable" data-act="@call" role="button" tabindex="0" aria-label="Abrir a call do squad" style="border-radius:18px;padding:12px;background:var(--sq-status-mint-card);border:1px solid var(--sq-status-mint);display:flex;align-items:center;gap:10px"><span style="color:var(--sq-status-mint-text)">${IC('vol',18)}</span><span class="col" style="flex:1;min-width:0"><b style="font-size:13px;color:var(--sq-status-mint-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Na call em Ranqueada tranquila</b><span class="m">Call do squad</span></span>${IB('mic','w',36,'data-act="@mic"')}${IB('exit','c',36,'data-act="@leave"')}</div>`]]},
+'09':{n:'Detalhe do squad',back:1,tab:2,gap:20,b:[['G',8,0,['T','91% combina com você','l'],['H','Squad só de minas e pessoas não binárias',null,'t2']],['TAGS',[['Prata–Ouro','p'],['Chill','p'],['Voz','p'],['Squad seguro','m','shieldck'],['Só minas e NB','b']]],['C','w',10,['T','Por que combina','k'],['LI',['Mesmo clima: chill','Precisam de qualquer função','Squad seguro: reputação 2+ ou novatos']]],['S','No squad · 2/5',null,['C','w',14,['R',['MA','raw/ff8fb0'],'marimbondo','Duelista · nível 4',['TAG','Comunicativa','m']],['HR'],['R',['LU','raw/c3a6ff'],'luzinha','Suporte · nível 5',['TAG','Gente boa','m']],['HR'],['R',[null],'3 vagas abertas','Procura qualquer função',['TX','']]]]],f:[['B','Pedir para entrar','p'],['T','O squad vê seu nível, suas tags e suas funções.','m',null,'c']]},
+'10':{n:'Regras do squad',back:1,tab:2,hd:'regras',hdi:'hash',b:[['H','Combinados do squad','Ranqueada tranquila, foco em call. Leia antes de jogar.','t2'],['C','w',12,['LI',['Sem flame depois de round perdido','Call curta e respeitosa','Quem sai avisa antes']]],['C','pri',8,['RH',8,0,['ICO','shield',18,'brand/violet-text'],['T','O pacto do Squad vale aqui','b']],['T','Denúncias feitas neste squad vão para a moderação. Uma pessoa revisa e você recebe o resultado.','m']],['S','Sobre o squad',null,['TAGS',[['Valorant','p'],['Competitivo','p'],['Ouro–Platina','p'],['Equilibrado','p'],['Voz','p'],['Squad seguro','m','shieldck']]],['T','Liderança: **kaiNoturno** · Procurando: **Duelista**','m']]]},
+'11':{n:'Criar squad',back:1,b:[['H','Criar squad','Monte do seu jeito. Dá para mudar tudo depois.','t2'],['I','Nome do squad','Ranqueada chill de quinta','Diga o clima em poucas palavras. É a primeira coisa que as pessoas veem.'],['S','Jogo',null,['CH',['Valorant','League of Legends'],[0]]],['S','Clima e comunicação',null,['CH',['Chill','Equilibrado','Tryhard','Voz','Texto','Só pings'],[0,3]]],['S','Quem vocês procuram',null,['CH',['Duelista','Iniciador','Controlador','Sentinela'],[0]]],['S','Segurança',null,['C','w',16,['R',null,'Squad seguro','Reputação 2+ ou novatos nas 5 primeiras partidas',T1],['HR'],['R',null,'Aprovar quem pede para entrar','Você vê nível e tags antes de aceitar',T1],['HR'],['R',null,'Só mulheres e pessoas não binárias','Moderado com prioridade',T0]]]],f:[['B','Criar squad','p']]},
+'12':{n:'Aviso de tom (IA)',tab:2,backTo:'07',hd:'geral',hdi:'hash',hdr:['shield','c'],gap:18,b:[['T','Você entrou no squad. Lembrete do pacto: respeito vem antes do rank.','m',null,'c'],['MSG','KA','raw/7bdff2','kaiNoturno','bem-vinda!! vc joga de controladora?','LÍDER'],['MSG','DU','raw/ffd166','dudz','boa, falta só duelista agora'],['MSG','TH','raw/3de0a6','theo.exe','eu tô aquecendo no range, 5 min']],f:[['C','butter',10,['RH',8,0,['ICO','info',18,'raw/7a5a00'],['T','Aviso do Squad','b']],['T','Essa mensagem pode soar ofensiva para o seu squad. Quer reescrever?','p'],['HTML','<div class="q" id="toneq" style="background:var(--sq-surface-white)"><p class="tx p">“vc é muito noob”</p></div>'],['T','O aviso é automático e só você vê. Ninguém é punido por uma mensagem que você não enviou.','m'],['RH',8,'eq',['B','Reescrever','p',null,1],['B','Enviar assim','w',null,1]]]]},
+'13':{n:'Segurança no squad',sheet:1,under:'08c',b:[['H','Segurança','Toque em alguém para silenciar, bloquear ou denunciar. Silenciar e bloquear são anônimos.','t2'],['C','soft',12,['R',['KA','raw/7bdff2'],'kaiNoturno','Líder do squad',CHV],['HR'],['R',['DU','raw/ffd166'],'dudz','Sentinela',CHV],['HR'],['R',['TH','raw/3de0a6'],'theo.exe','Iniciador',CHV]]],f:[['B','Sair do squad','d','exit'],['B','Cancelar','g']]},
+'36':{n:'Ações sobre uma pessoa',sheet:1,under:'08c',b:[['RH',12,'f',['AV','TH','raw/3de0a6',52],['G',2,0,['T','theo.exe','h'],['T','Iniciador · nível 3','m']]],['C','soft',12,['R','user','Ver perfil',null,CHV,'p'],['HR'],['R','mute','Silenciar','Você para de ouvir e ver as mensagens. Ninguém é avisado.',CHV,'b'],['HR'],['R','block','Bloquear','Vocês não caem mais no mesmo squad.',CHV,'g']]],f:[['B','Denunciar','d','flag'],['B','Cancelar','g']]},
+'37':{n:'Perfil de outra pessoa',back:1,tab:2,gap:20,b:[['G',6,'c',['AV','TH','raw/3de0a6',84],['T','theo.exe','hd',null,'c'],['T','ele/dele · Tryhard · Voz','m',null,'c']],['C','w',12,['RH',14,'f',['ICO','badge/escudo-nivel',48],['G',2,0,['T','Reputação','m'],['T','Boa companhia','h'],['T','12 elogios · nível 3','m']]]],['S','O que dizem dele',null,['TAGS',[['Jogou bem · 6','m'],['Estratégico · 4','m'],['Pontual · 2','m']]]],['S','Jogos',null,['C','w',12,['R',['VAL','raw/ff6b7a'],'Valorant','Platina · Iniciador, Duelista',['TX','']]]],['C','soft',8,['RH',10,'f',['ICO','clock',18,'text/muted'],['T','Vocês jogaram 2 partidas juntos. A última foi ontem, em Ranqueada tranquila.','m']]]],f:[['RH',10,'eq',['B','Convidar','p','plus'],['B','Opções','w','more']]]},
+'14':{n:'Gerenciar squad',back:1,tab:2,b:[['H','Gerenciar squad','Chill de quinta à noite · 3/5 · você lidera','t2'],['S','Pedidos para entrar · 2','Quem é recusado só vê que o squad não tem vaga agora.',['HTML','<div class="col" style="gap:12px" id="reqs">'+put(['C','w',12,['R',['NI','raw/7ef0c4'],'ninaGG · ela/dela','Controlador · nível 3',['TX','']],['TAGS',[['Gente boa · 12','m'],['Comunicativo(a) · 8','m']]],['RH',8,'eq',['B','Aceitar','p','check',1],['B','Recusar','s',null,1]]])+put(['C','w',12,['R',['JO','raw/ff9f43'],'jo.mp4 · elu/delu','Iniciador · nível 1 · novato(a)',['TX','']],['T','Ainda sem elogios. Está no período de boas-vindas.','m'],['RH',8,'eq',['B','Aceitar','p','check',1],['B','Recusar','s',null,1]]])+'</div>']],['S','Membros',null,['C','w',12,['R',['LU','raw/c3a6ff'],'luzinha','Suporte · nível 5',['TX','Opções','l']],['HR'],['R',['RA','raw/5ba4ff'],'rafa_ace','Entry · nível 2',['TX','Opções','l']],['HR'],['R',ME,'sak','Você',['TAG','LÍDER','m']]]],['S','Quem pode entrar',null,['C','w',16,['R',null,'Squad seguro','Reputação 2+ ou novatos',T1],['HR'],['R',null,'Aprovar pedidos','Você vê nível e elogios antes',T1],['HR'],['R',null,'Só mulheres e pessoas não binárias','Moderado com prioridade',T0]]],['B','Encerrar squad','d','x']]},
+'34':{n:'Pedido enviado',back:1,tab:2,top:120,gap:18,b:[['G',12,'c',['IMG','laptop2',170,150],['T','Pedido enviado!','t2',null,'c'],['T','marimbondo, a líder, vê seu nível e suas tags e decide. Você recebe uma notificação.','p','text/muted','c']],['C','w',12,['R',['SM','raw/c3a6ff'],'Squad só de minas e NB','Valorant · Competitivo · 2/5',['TAG','Aguardando','b','clock']]],['T','Se não houver vaga, o pedido expira em 24 horas. Ninguém é avisado.','m',null,'c']],f:[['B','Encontrar outros squads','s','compass'],['B','Cancelar pedido','g']]},
+'35':{n:'Sem vaga agora',back:1,tab:2,top:120,gap:20,b:[['G',12,'c',['IMG','focus',130,130],['T','Esse squad não tem vaga agora','t2',null,'c'],['T','Acontece! Separamos squads com o mesmo clima.','p','text/muted','c']],['S','Parecidos com esse',null,['C','w',12,['R',['CQ','raw/7bdff2'],'Chill de quinta à noite','Valorant · 3/5 · 100% combina',CHV],['HR'],['R',['FD','raw/ffd166'],'Flex depois do trampo','LoL · 4/5 · 82% combina',CHV]]]],f:[['B','Ver mais squads','p']]},
+'38':{n:'Opções do membro (líder)',sheet:1,under:'14',b:[['RH',12,'f',['AV','RA','raw/5ba4ff',52],['G',2,0,['T','rafa_ace','h'],['T','Entry · nível 2 · no squad há 3 dias','m']]],['C','soft',12,['R','user','Ver perfil',null,CHV,'p'],['HR'],['R','star','Passar liderança','rafa_ace vira líder e você continua no squad.',CHV,'o'],['HR'],['R','mute','Silenciar no squad por 1 hora','Só no chat e na call deste squad.',CHV,'b']]],f:[['B','Remover do squad','d','exit'],['T','A pessoa só vê que saiu do squad. Se algo grave aconteceu, denuncie.','m',null,'c'],['B','Cancelar','g']]},
+'51':{n:'Encerrar squad: confirmação',sheet:1,under:'14',b:[['H','Encerrar o squad?','Chill de quinta à noite deixa de existir para todo mundo. Não dá para desfazer.','t2'],['C','soft',12,['R','chat','O chat e a call são apagados','Denúncias já feitas continuam com a moderação.',null,'c'],['R','squad','luzinha e rafa_ace recebem um aviso','Eles podem procurar outro squad na hora.',null,'p'],['R','star','Sua reputação não muda','Encerrar não conta como abandono.',null,'m']]],f:[['B','Encerrar squad','d','x'],['B','Passar liderança em vez disso','s','star'],['B','Cancelar','g']]},
+'39':{n:'Proteção de voz: primeira vez',sheet:1,under:'15',b:[['H','Proteção de voz','Para você ter como provar se alguém passar dos limites na call.','t2'],['C','soft',14,['R','mic','Guarda só os últimos 30 segundos','O áudio fica no seu aparelho e é apagado sozinho.',null,'m'],['R','flag','Só sai daqui se você denunciar','Você escolhe anexar. A moderação ouve só esse trecho.',null,'p'],['R','eye','Ninguém é gravado escondido','O squad vê o selo de proteção ligada na call.',null,'o']]],f:[['B','Ligar proteção de voz','p','shieldck'],['B','Agora não','g'],['T','Você pode mudar isso a qualquer hora na Central de segurança.','m',null,'c']]},
+'15':{n:'Partida com overlay',dark:1,back:1,top:70,gap:16,b:[['HTML','<div class="row" style="justify-content:center;gap:14px;color:#fff"><b class="hd">13</b><b class="l" id="mt" style="color:#fff;font-variant-numeric:tabular-nums">00:01</b><b class="hd" style="color:#FF6B7A">11</b></div>'],['C','w',10,['RH',8,'sb',['RH',8,0,['ICO','vol',18,'text/primary'],['T','Call do squad','b']],['HTML','<span class="tag c live">AO VIVO</span>']],['CH',['Proteção de voz · 30 s'],[0],'m',['shieldck']],['R',['KA','raw/7bdff2',32],'kaiNoturno',null,['IB','mute','p',32]],['R',['DU','raw/ffd166',32],'dudz',null,['IB','mute','p',32]],['R',['TH','raw/3de0a6',32],'theo.exe','Silenciado(a) por você',['IB','mute','c',32]]]],f:[['C','w',8,['RH',8,0,['AV','KA','raw/7bdff2',26],['T','**kaiNoturno:** boa, segura o bomb!','p']]],['RH',10,'f',['IB','mic','w',52],['IB','chat','w',52],['IB','flag','c',52],['B','Fim da partida','p','play']]]},
+'16':{n:'Fim de partida: feedback',back:1,hd:'Fim de partida',gap:18,b:[['T','Marque o que cada pessoa fez de bom. Leva 10 segundos e vale reputação para ela.','p','text/muted'],['C','w',12,['R',['KA','raw/7bdff2'],'kaiNoturno','Controlador · nível 4',['IB','flag','c',36]],['CH',TAGQ,[0,1,2],'m']],['C','w',12,['R',['DU','raw/ffd166'],'dudz','Sentinela · nível 5',['IB','flag','c',36]],['CH',TAGQ,[5],'m']],['C','coral',10,['R',['TH','raw/3de0a6'],'theo.exe','Iniciador · nível 3',['IB','flag','c',36]],['T','Jogaria com theo.exe de novo?','m'],['CH',['Jogaria sim','Bloquear'],[1],'c'],['T','Ao enviar, essa pessoa é bloqueada. Vocês não caem mais juntos e ninguém é avisado.','m']],['S','E o squad?','Continue para as próximas partidas ou saia agora, sem penalidade.',['CH',['Continuar neste squad','Sair do squad'],[0]]]],f:[['B','Enviar','p']]},
+'17':{n:'Feedback enviado',back:1,top:120,gap:16,b:[['G',14,'c',['IMG','happy2',200,200],['HTML','<span class="tag p">'+IC('star',12)+'Nível 3 · <b id="xp70" style="margin-left:3px">62</b>/100</span>'],['T','Valeu por elogiar!','t2',null,'c'],['HTML','<p class="tx p c" style="color:var(--sq-text-muted)">Você enviou <b id="nel">4</b> elogios. Quem elogia também ganha reputação: +<b id="npt">8</b> pontos para você.</p>']],['C','mint',8,['RH',8,0,['ICO','block',18,'status/mint-text'],['T','1 pessoa foi bloqueada, e ninguém foi avisado.','m','status/mint-text']]]],f:[['B','Jogar outra com esse squad','p'],['B','Voltar ao início','g']]},
+'40':{n:'Denúncia: quem',back:1,gap:20,b:[['G',8,0,['T','Denúncia · etapa 1 de 3','m'],['H','Quem você quer denunciar?','Só a moderação vê. A pessoa não sabe quem denunciou.']],['HTML','<div class="card" style="gap:12px" id="who">'+[['TH','raw/3de0a6','theo.exe',1],['KA','raw/7bdff2','kaiNoturno'],['DU','raw/ffd166','dudz']].map(([i,c,n,on],k)=>`${k?'<div class="hr"></div>':''}<button class="rw clickable" data-pick style="padding:2px 0">${AV(i,c,40)}<span class="mid">${T(n,'b')}${T('No seu squad agora','m')}</span><span class="pk" style="color:var(--sq-brand-violet-text);visibility:${on?'visible':'hidden'}">${IC('check',20)}</span></button>`).join('')+'<div class="hr"></div>'+put(['R','more','Outra pessoa','Busque pelo nick',CHV,'g'])+'</div>'],['S','Onde aconteceu?',null,['CH',['Na call','No chat','Na partida','No perfil'],[0]]]],f:[['B','Continuar','p']]},
+'18':{n:'Denúncia: o que aconteceu',back:1,gap:20,b:[['G',8,0,['T','Denúncia · etapa 2 de 3','m'],['H','O que aconteceu?','Escolha o que mais se parece. A moderação ajusta se precisar.']],['S','Urgente',null,['HTML','<div class="card coral" style="gap:14px" data-radio>'+[['Ameaça ou risco de alguém se machucar','Ameaça de violência, ou alguém falou em se machucar'],['Envolve menor de idade','Pedido de foto, conversa sexual ou aliciamento']].map(([a,b],i)=>`${i?'<div class="hr"></div>':''}<button class="rw clickable" data-pick><span class="mid">${T(a,'b')}${T(b,'m')}</span><span class="pk" style="visibility:hidden;color:var(--sq-brand-violet-text)">${IC('check',20)}</span></button>`).join('')+'</div>']],['S','Outros',null,['HTML','<div class="card" style="gap:14px" data-radio>'+[['Ofensa ou discurso de ódio','Xingamento, racismo, LGBTfobia, machismo'],['Assédio','Comentários sobre corpo ou voz, insistência',1],['Golpe ou link suspeito','Troca de skin, link falso, pedido de senha'],['Exposição de dados pessoais','Nome, endereço, foto ou rede social'],['Abandono, sabotagem ou trapaça','Saiu da partida, cheat, smurf'],['Outro','Algo que não está aqui']].map(([a,b,on],i)=>`${i?'<div class="hr"></div>':''}<button class="rw clickable" data-pick><span class="mid">${T(a,'b')}${T(b,'m')}</span><span class="pk" style="visibility:${on?'visible':'hidden'};color:var(--sq-brand-violet-text)">${IC('check',20)}</span></button>`).join('')+'</div>']]],f:[['B','Continuar','p']]},
+'19':{n:'Denúncia: detalhes',back:1,gap:20,b:[['G',8,0,['T','Denúncia · etapa 3 de 3','m'],['H','Quer contar mais?','Opcional. Detalhes ajudam a moderação a agir mais rápido.']],['I','O que aconteceu (opcional)','Depois do 3º round começou a comentar sobre a minha voz.',null,1],['S','Evidências',null,['C','w',14,['R',null,'Anexar o chat do squad','As últimas mensagens vão só para a moderação',T1],['HR'],['R',null,'Anexar os últimos 30 s da call','O áudio estava só no seu aparelho',T1],['HR'],['R','plus','Adicionar print ou clipe','Opcional',CHV]]],['C','w',12,['R',null,'Bloquear essa pessoa também','Vocês não caem mais no mesmo squad',T1]]],f:[['B','Enviar denúncia','p']]},
+'20':{n:'Denúncia enviada',back:1,top:90,gap:18,b:[['G',12,'c',['IMG','shield',120,130],['T','Denúncia enviada','t2',null,'c'],['T','Obrigado por cuidar do squad. theo.exe foi bloqueado e não aparece mais para você.','p','text/muted','c']],['C','w',14,['RH',8,'sb',['T','R-2043','b'],['TAG','Em andamento','p']],['ST',STP]],['T','Prazo médio de resposta: 24 horas. Você recebe uma notificação em cada etapa.','m',null,'c']],f:[['B','Voltar','p'],['B','Ver minhas denúncias','g']]},
+'21':{n:'Minhas denúncias',back:1,tab:3,b:[['H','Minhas denúncias','Toda denúncia tem resposta. Você acompanha cada uma aqui.','t2'],['C','pri',10,['RH',8,0,['ICO','flag',18,'brand/violet-text'],['T','Fazer uma denúncia','b']],['T','Aconteceu algo numa partida, num squad ou no chat? Uma pessoa revisa e você recebe o resultado.','m'],['B','Nova denúncia','s','plus',1]],['S','Suas denúncias',null,['C','w',14,['R','clock','Assédio','R-2043 · hoje · theo.exe',['TAG','Em andamento','p'],'p'],['HR'],['R','check','Ofensa ou discurso de ódio','R-2041 · ontem · zecaFlash',['TAG','Resolvida','m'],'m']]]]},
+'22':{n:'Acompanhar denúncia',back:1,tab:3,hd:'R-2043',b:[['C','w',6,['T','hoje · theo.exe','m'],['T','Assédio','h'],['T','Evidências: chat do squad · áudio de 30 s da call · seu relato','m']],['C','w',14,['ST',STP]]],f:[['B','Adicionar informação','s','plus']]},
+'41':{n:'Denúncia: resultado com ação',back:1,tab:3,hd:'R-2041',gap:20,b:[['G',6,0,['T','ontem · zecaFlash','m'],['T','Ofensa ou discurso de ódio','t2']],['C','mint',6,['T','Resultado','k','status/mint-text'],['T','Ação tomada','h'],['T','A conta recebeu uma restrição de chat por 24 horas. Ela não sabe quem denunciou.','m']],['C','w',14,['ST',[['Recebida','ontem','d'],['Evidências organizadas','ontem','d'],['Revisada por uma pessoa','hoje','d'],['Resultado','Ação tomada','d']]]],['S','Essa resposta foi útil?',null,['CH',['Sim','Mais ou menos','Não'],[]]]],f:[['T','Obrigado por denunciar. Isso deixa os squads melhores para todo mundo.','m',null,'c']]},
+'42':{n:'Denúncia: resultado sem violação',back:1,tab:3,hd:'R-2039',gap:20,b:[['G',6,0,['T','28/out · caio_r','m'],['T','Assédio','t2']],['C','soft',6,['T','Resultado','k'],['T','Não encontramos quebra do pacto','h'],['T','Uma pessoa revisou o chat e o áudio e não viu quebra das regras. Isso não quer dizer que o que você sentiu não importa.','m']],['S','O que você ainda pode fazer',null,['C','w',14,['R','block','Bloquear caio_r','Vocês não caem mais juntos. Ninguém é avisado.',['BS','Bloquear','s'],'g'],['HR'],['R','plus','Pedir nova revisão','Se tiver algo novo, como um print ou clipe.',CHV,'p'],['HR'],['R','shield','Ajustar seus limites','Filtros de squad na Central de segurança.',CHV,'m']]]]},
+'58':{n:'Conquistas',back:1,tab:3,b:[['H','Conquistas','Cada conquista mostra como você joga junto. Nada aqui é sobre rank.','t2'],['HTML',()=>`<div class="card achsum"><div class="row" style="gap:14px;align-items:center"><span class="achi big on" style="--sq-g:linear-gradient(135deg,#FFD166,#FF8A1F)">${IC('star',28)}</span><div class="col" style="gap:4px;flex:1"><span class="m">Desbloqueadas</span><span class="h"><b id="achn">6</b> de 12</span><span class="achb"><i style="width:50%"></i></span></div></div></div>`],['HTML',()=>`<div class="chips" id="achf" style="flex-wrap:nowrap"><button class="chip on" data-f="all">Todas</button><button class="chip" data-f="on">Desbloqueadas</button><button class="chip" data-f="off">Em progresso</button></div><div class="achg" id="achg">${ACH.map(achTile).join('')}</div>`]]},
+'23':{n:'Perfil e reputação',tab:3,html:()=>`<div class="page" style="padding-top:62px;padding-bottom:136px"><div class="col" style="gap:22px">
+ <div class="row" style="justify-content:space-between"><span class="hd">Perfil</span><div class="row" style="gap:10px">${IB(ST.theme==='dark'?'moon':'sun','w',44,'data-act="@theme"')}${IB('gear','w',44,'data-act="@gear"')}</div></div>
+ ${put(['G',6,'c',['AV','SA','raw/ff8fb0',84],['T','sak','hd',null,'c'],['T','ela/dela · Equilibrado · Voz','m',null,'c'],['HTML','<button class="btn w sm hug" data-act="Editar perfil" style="margin-top:6px">'+IC('user',16)+'Editar perfil</button>']])}
+ ${put(['C','w',14,['RH',14,'f',['ICO','badge/escudo-nivel',52],['G',2,0,['T','Reputação','m'],['T','Boa companhia','h'],['T','55 elogios · 1 denúncia confirmada','m']]],['BAR','Nível 3 → Referência',62,100,8,'brand/violet'],['HTML','<button class="l" data-act="Como funciona?" style="text-align:left">Como funciona?</button>']])}
+ <button class="card achprev" data-act="Conquistas"><div class="row" style="justify-content:space-between;align-items:center"><div class="col" style="gap:2px;text-align:left"><span class="h">Conquistas</span><span class="m">6 de 12 desbloqueadas</span></div>${IC('right',18)}</div><div class="row" style="gap:10px;margin-top:12px">${ACH.slice(2,6).map(a=>`<span class="achi sm on" style="--sq-g:linear-gradient(135deg,${a[6]})">${IC(a[0],18)}</span>`).join('')}<span class="achi sm more">+2</span></div></button>
+ ${put(['S','O que dizem de você',null,['C','w',12,['BAR','Respeitoso(a)',14,14],['BAR','Comunicativo(a)',12,14],['BAR','Jogou bem',10,14],['BAR','Gente boa',9,14],['BAR','Estratégico(a)',5,14]]])}
+ ${put(['S','Jogos',null,['C','w',12,['R',['VAL','raw/ff6b7a'],'Valorant','Ouro · Controlador, Sentinela',['TX','']],['HR'],['R',['LOL','raw/ffd166'],'League of Legends','Prata · Suporte',['TX','']]]])}
+ ${put(['RH',10,'eq',['B','Segurança','w','shield',1],['B','Denúncias','w','flag',1]])}</div></div>`},
+'53':{n:'Editar perfil',back:1,tab:3,hd:'Editar perfil',gap:22,b:[['G',8,'c',['AV','SA','raw/ff8fb0',84],['HTML','<button class="l" data-act="Trocar foto">Trocar foto</button>']],['I','Nick','sak','Dá para mudar 1 vez a cada 30 dias.'],['S','Pronomes',null,['CH',['ela/dela','ele/dele','elu/delu','Prefiro não dizer','Outro'],[0]],['C','w',12,['R',null,'Mostrar pronomes no perfil',null,T1]]],['S','Jogos',null,['C','w',12,['R',['VAL','raw/ff6b7a'],'Valorant','Ouro · Controlador, Sentinela',CHV],['HR'],['R',['LOL','raw/ffd166'],'League of Legends','Prata · Suporte',CHV],['HR'],['R','plus','Adicionar jogo',null,CHV,'p']]],['S','Estilo',null,['C','w',12,['R','heart','Equilibrado · Voz','Usado para achar squads que combinam com você',CHV,'m']]],['S','Conta',null,['C','w',12,['R','clock','Pausar conta','Ninguém te vê e nada é apagado',CHV,'b'],['HR'],['R','x','Encerrar conta','Apaga seu perfil e sua reputação',CHV,'c']]]],f:[['B','Salvar','p']]},
+'24':{n:'Trocar foto',sheet:1,under:'23',b:[['H','Foto de perfil',null,'t2'],['G',12,'c',['HTML','<span id="bigav">'+AV('SA','raw/ff8fb0',96)+'</span>']],['B','Enviar foto','p','camera'],['T','Ou escolha uma cor para suas iniciais','m'],['HTML','<div class="row" style="gap:12px" id="avcols">'+['ff8fb0','c3a6ff','7bdff2','ffd166','3de0a6','ff9f43'].map(c=>`<button data-col="${c}" aria-label="Cor ${c}" style="border-radius:14px">${AV('SA','raw/'+c,44)}</button>`).join('')+'</div>'],['T','Fotos passam por uma checagem automática. Nada de nudez, violência ou foto de outra pessoa.','m']],f:[['B','Fechar','g']]},
+'25':{n:'Como a reputação funciona',sheet:1,under:'23',b:[['RH',12,'f',['IMG','focus',72,72],['T','Como a reputação funciona','t2']],['R','heart','Elogios somam pontos','Cada qualidade marcada por quem jogou com você vale pontos.',null,'m'],['R','shield','Denúncia só conta se confirmada','Uma pessoa revisa antes. Denúncia falsa não tira ponto.',null,'p'],['R','star','Vale em todos os jogos','Sua reputação acompanha você do Valorant ao LoL.',null,'o'],['R','clock','Todo mundo pode melhorar','Pontos perdidos voltam com o tempo e bom comportamento.',null,'b'],['R','user','Chegou agora? Você já entra','Nas 5 primeiras partidas, você joga em squads seguros mesmo sem nível.',null,'p']],f:[['B','Entendi','p']]},
+'26':{n:'Central de segurança',back:1,tab:3,gap:22,b:[['H','Central de segurança',null,'t2'],['C','mint',8,['RH',10,'f',['ICO','shieldck',22,'status/mint-text'],['T','Silenciar e bloquear são sempre anônimos. Denúncias são revisadas por pessoas.','m','status/mint-text']]],['C','coral',8,['R','info','1 aviso ativo · restrição de chat','Termina amanhã às 21h. Toque para ver.',CHV,'c']],['S','Privacidade e limites',null,['C','w',14,['R',null,'Mostrar meus pronomes',null,T1],['HR'],['R',null,'Voz opcional nos meus squads',null,T1],['HR'],['R',null,'Só squads com maiores de 18',null,T1],['HR'],['R',null,'Só pessoas com reputação 2 ou mais',null,T1]]],['S','Voz',null,['C','w',14,['R',null,'Proteção de voz','Guarda os últimos 30 s da call só no seu aparelho',T1],['HR'],['R',null,'Entrar com desconhecidos silenciados','Você ouve só quem já jogou com você',T0]]],['S','Bloqueados',null,['C','w',12,['R',['TH','raw/3de0a6'],'theo.exe',null,['BS','Desbloquear','s']]]],['B','Falar com a equipe de segurança','g']]},
+'27':{n:'Notificações',back:1,tab:3,b:[['H','Notificações',null,'t2'],['C','w',14,['R','info','Você recebeu um aviso da moderação','agora',CHV,'c'],['HR'],['R','check','Sua denúncia R-2041 teve resultado','2 h',CHV,'m'],['HR'],['R','heart','dudz te elogiou: Calma sob pressão','ontem',CHV,'p'],['HR'],['R','squad','kaiNoturno te convidou para um squad','ontem',['BS','Ver','s'],'p'],['HR'],['R','star','Você subiu para o nível 3 de reputação','3 dias',CHV,'o']]]},
+'28':{n:'Configurações',back:1,tab:3,b:[['H','Configurações',null,'t2'],['S','Aparência',null,['HTML','<div class="chips" data-single id="themech"><button class="chip" data-chip data-th="light">Claro</button><button class="chip" data-chip data-th="dark">Escuro</button></div>']],['S','Comunicações',null,['C','w',14,['R',null,'Novidades do Squad','No máximo 2 por mês',T1],['HR'],['R',null,'Squads que combinam com você','Quando abrir um squad no seu jogo',T1],['HR'],['R',null,'Eventos e campeonatos','Torneios da comunidade',T0]]],['S','Conta',null,['C','w',14,['R',null,'E-mail e senha','sak@gmail.com',CHV],['HR'],['R',null,'Idioma','Português',CHV],['HR'],['R',null,'Contas conectadas',null,CHV],['HR'],['R',null,'Pausar conta','Ninguém te vê e nada é apagado',CHV],['HR'],['HTML','<div class="rw clickable" data-act="Encerrar conta" role="button" tabindex="0"><span class="mid"><p class="tx b" style="color:var(--sq-status-coral-text)">Encerrar conta</p><p class="tx m">Apaga seu perfil e sua reputação</p></span><span style="color:var(--sq-text-muted)">'+IC('right',18)+'</span></div>']]],['B','Sair','d','exit']]},
+'29':{n:'Aviso da moderação',back:1,tab:3,hd:'Aviso da moderação',gap:20,b:[['C','coral',6,['T','A-118 · Aviso ativo','k','status/coral-text'],['T','Restrição de chat por 24 horas','h'],['T','Termina amanhã às 21h. Você continua jogando e usando a call; só o chat de texto fica bloqueado.','m']],['S','O que aconteceu',null,['C','w',10,['T','ontem, 22:14 · Flex depois do trampo, sem tilt','m'],['T','Ofensa ou discurso de ódio','b'],['Q','“que call ridícula, vc é burra?”'],['T','Uma pessoa da moderação leu o chat anexado e entendeu que a mensagem quebra o combinado **Respeito vem antes do rank** do pacto. Não mostramos quem denunciou.','m']]],['S','O que muda',null,['C','w',14,['R','chat','Chat de texto bloqueado','Até amanhã às 21h. Call e pings seguem normais.',null,'c'],['R','star','−6 pontos de reputação','Voltam com o tempo e com elogios.',null,'b'],['R','clock','Se acontecer de novo','A próxima restrição é mais longa. Avisos somem depois de 90 dias.',null,'g']]]],f:[['B','Entendi','p'],['B','Contestar este aviso','w'],['T','Contestar não aumenta a punição.','m',null,'c']]},
+'30':{n:'Contestar aviso',back:1,tab:3,hd:'Contestar aviso',b:[['H','Por que você discorda?','Uma pessoa diferente da que decidiu vai revisar o caso, com o chat completo.','t2'],['CH',['Fui mal interpretado(a)','Foi uma brincadeira entre amigos','A mensagem não era minha','Outro motivo'],[0]],['I','Conte com suas palavras','Ex.: a gente se conhece e estava zoando entre nós, ela pode confirmar',null,1,1],['C','soft',8,['RH',10,'f',['ICO','clock',20,'text/muted'],['T','Resposta em até 48 horas. A restrição continua valendo enquanto isso. Se o aviso for retirado, os pontos voltam.','m']]]],f:[['B','Enviar contestação','p']]},
+'43':{n:'Contestação enviada',back:1,top:120,gap:18,b:[['G',12,'c',['IMG','focus',140,140],['T','Contestação enviada','t2',null,'c'],['T','Uma pessoa diferente vai revisar o aviso A-118 com o chat completo.','p','text/muted','c']],['C','w',14,['ST',[['Enviada','agora','d'],['Em revisão','até 48 horas','a'],['Resultado','Você recebe aqui e por notificação','p']]]],['T','A restrição continua valendo enquanto isso.','m',null,'c']],f:[['B','Voltar à Central de segurança','p']]},
+'44':{n:'Contestação: aviso retirado',back:1,tab:3,hd:'Aviso A-118',gap:20,b:[['C','mint',6,['T','Contestação aceita','k','status/mint-text'],['T','O aviso foi retirado','h'],['T','A revisão entendeu que a mensagem foi mal interpretada. Desculpa pelo transtorno.','m']],['S','O que muda',null,['C','w',14,['R','chat','Chat liberado','Você já pode mandar mensagens.',null,'m'],['R','star','+6 pontos de volta','Os 6 pontos voltaram para a sua reputação.',null,'m'],['R','check','Fora do seu histórico','O aviso não conta numa próxima vez.',null,'m']]]],f:[['B','Entendi','p']]},
+'45':{n:'Contestação: aviso mantido',back:1,tab:3,hd:'Aviso A-118',gap:20,b:[['C','coral',6,['T','Contestação revisada','k','status/coral-text'],['T','O aviso foi mantido','h'],['T','Outra pessoa leu o chat e chegou à mesma conclusão: a mensagem quebra o combinado **Respeito vem antes do rank**.','m']],['S','O que acontece agora',null,['C','w',14,['R','clock','A restrição termina amanhã às 21h','Call e pings seguem normais.',null,'g'],['R','star','Os pontos voltam com o tempo','Elogios de quem joga com você ajudam.',null,'b'],['R','book','Relembre o pacto','São 4 combinados. Leva 1 minuto.',CHV,'p']]]],f:[['B','Entendi','p'],['T','Essa decisão é final para este aviso.','m',null,'c']]},
+'54':{n:'Encerrar conta',back:1,gap:20,b:[['H','Encerrar sua conta?','Antes de decidir, veja o que acontece.','t2'],['C','w',14,['R','user','Seu perfil e sua reputação somem','Nick, elogios e nível não podem ser recuperados.',null,'c'],['R','squad','Você sai dos seus squads','Em Chill de quinta à noite, a liderança passa para luzinha.',null,'p'],['R','flag','Denúncias abertas continuam','A R-2043 segue em revisão. Avisos ativos não são apagados.',null,'b'],['R','clock','30 dias para mudar de ideia','Entre de novo nesse prazo e tudo volta.',null,'m']],['C','pri',10,['RH',8,0,['ICO','info',18,'brand/violet-text'],['T','Só quer um tempo?','b']],['T','Pause a conta: ninguém vê seu perfil e nada é apagado.','m'],['B','Pausar conta','s','clock',1]],['S','Por que você está saindo?','Opcional. Ajuda a gente a melhorar.',['CH',['Não jogo mais','Tive uma experiência ruim','Não achei squads','Privacidade','Outro'],[]]]],f:[['B','Continuar','d'],['B','Cancelar','g']]},
+'55':{n:'Encerrar conta: confirmar',back:1,gap:20,b:[['H','Confirme que é você','Para proteger sua conta, digite sua senha.','t2'],['I','Senha','senhaforte'],['T','Esqueceu sua senha?','l'],['T','Entrou com Google ou Discord? Você confirma por lá.','m'],['C','coral',8,['RH',10,'f',['ICO','info',18,'status/coral-text'],['T','A conta fica pausada por 30 dias e depois é apagada de vez. Não dá para recuperar depois disso.','m','status/coral-text']]]],f:[['B','Encerrar minha conta','d','x'],['B','Cancelar','g']]},
+'56':{n:'Conta encerrada',top:140,gap:16,b:[['G',14,'c',['IMG','wave2',170,170],['T','Sua conta foi encerrada','t2',null,'c'],['T','Foi bom jogar com você, sak. Se mudar de ideia, entre de novo até 18/dez e tudo volta.','p','text/muted','c']],['C','soft',8,['R','info','Enviamos um e-mail para sak@gmail.com','Com o resumo e um link para baixar seus dados.',null,'g']]],f:[['B','Fechar','s']]},
+'57':{n:'Pausar conta',sheet:1,under:'53',b:[['H','Pausar a conta','Ninguém vê seu perfil e você sai da busca de squads. Nada é apagado.','t2'],['S','Por quanto tempo?',null,['CH',['1 semana','1 mês','Até eu voltar'],[2]]],['C','soft',8,['RH',10,'f',['ICO','info',18,'text/muted'],['T','Para voltar, é só entrar de novo. Denúncias e avisos continuam valendo.','m']]]],f:[['B','Pausar conta','p','clock'],['B','Cancelar','g']]},
+'46':{n:'Squads: sem nenhum squad',tab:2,back:1,top:150,gap:14,b:[['G',14,'c',['IMG','wave2',180,180],['T','Você ainda não tem squads','t2',null,'c'],['T','Ache um squad do seu jeito ou crie o seu. Ele aparece aqui, com chat e call.','p','text/muted','c']]],f:[['B','Encontrar squad','p','compass'],['B','Criar meu squad','s','plus']]},
+'47':{n:'Busca sem resultados',back:1,tab:2,hd:'Encontrar squad',gap:24,b:[['CH',['Valorant','Squad seguro','Só minas e NB','Tryhard'],[0,1,2,3]],['G',12,'c',['IMG','think',130,130],['T','Nenhum squad com esses filtros agora','h',null,'c'],['T','Tire um filtro ou crie um squad com esse clima. Outras pessoas vão te achar.','m',null,'c']]],f:[['B','Criar squad com esses filtros','p','plus'],['B','Limpar filtros','g']]},
+'48':{n:'Minhas denúncias: vazio',back:1,tab:3,gap:30,b:[['H','Minhas denúncias',null,'t2'],['G',12,'c',['IMG','happy2',160,160],['T','Nada por aqui, que bom!','h',null,'c'],['T','Se algo acontecer numa partida, num squad ou no chat, conte pra gente. Toda denúncia tem resposta.','m',null,'c']],['B','Fazer uma denúncia','s','flag']]},
+'49':{n:'Notificações: vazio',back:1,tab:3,gap:40,b:[['H','Notificações',null,'t2'],['G',12,'c',['IMG','sleep',140,140],['T','Tudo em dia','h',null,'c'],['T','Elogios, convites e respostas de denúncias aparecem aqui.','m',null,'c']]]},
+'50':{n:'Sem conexão',tab:1,back:1,top:170,gap:14,b:[['G',14,'c',['IMG','laptop2',180,160],['T','Sem conexão','t2',null,'c'],['T','Parece que a internet caiu. Suas mensagens ficam guardadas e saem quando ela voltar.','p','text/muted','c']]],f:[['B','Tentar de novo','p']]}
+};
+
+const ACH=[
+ ['squad','Entrou no Squad','Criou sua conta e aceitou o pacto.',1,0,0,'#B14CF3,#7C3AED'],
+ ['shieldck','Pacto firmado','Leu e aceitou as regras de respeito.',1,0,0,'#2DD4A7,#0E9F75'],
+ ['heart','Primeiro elogio','Alguém do squad elogiou você.',1,0,0,'#FF7AA8,#E0336B'],
+ ['mic','Primeira call','Jogou uma partida com voz ligada.',1,0,0,'#FFB866,#FF8A1F'],
+ ['star','Boa companhia','Chegou ao nível 3 de reputação.',1,0,0,'#FFD166,#E0A800'],
+ ['user','Squad completo','Jogou com 5 pessoas no mesmo squad.',1,0,0,'#7DD3FC,#3B82F6'],
+ ['heart','Gente boa','Receba 10 elogios de pessoas diferentes.',0,7,10,'#FF7AA8,#E0336B'],
+ ['clock','Maratona chill','20 partidas seguidas sem denúncia.',0,14,20,'#B14CF3,#7C3AED'],
+ ['book','Mentor(a)','Ajude 3 pessoas novas no squad.',0,1,3,'#2DD4A7,#0E9F75'],
+ ['shield','Referência','Chegue ao nível 4 de reputação.',0,62,100,'#FFD166,#E0A800'],
+ ['chat','Boa de call','Receba 25 elogios de “Comunicativo(a)”.',0,12,25,'#FFB866,#FF8A1F'],
+ ['spark','Lenda gente boa','Receba 100 elogios. Poucas pessoas chegam aqui.',0,55,100,'#7DD3FC,#3B82F6']];
+function achTile(a,i){const [ic,n,d,on,v,m,g]=a;const pct=on?100:Math.round(v/m*100);
+ return `<button class="acht${on?' on':''}" data-ach="${i}" aria-label="${esc(n)}${on?', desbloqueada':`, ${v} de ${m}`}"><span class="achi" style="--sq-g:linear-gradient(135deg,${g})">${IC(on?ic:'lock',on?24:20)}</span><b>${esc(n)}</b>${on?'<small>Desbloqueada</small>':`<span class="achb"><i style="width:${pct}%"></i></span><small>${v}/${m}</small>`}</button>`;}
+const GROUPS=[['Entrada',['01','02','03','31','32','04','05']],['Início',['06','33','52']],['Squads',['07','08f','08c','09','34','35','10','11','12','13','36','37','14','38','51']],['Partida',['39','15','16','17']],['Denúncia',['40','18','19','20','21','22','41','42']],['Perfil',['23','58','53','24','25','26','27','28','29','30','43','44','45','54','55','56','57']],['Estados vazios',['46','47','48','49','50']]];
+/* ===== para onde cada ação leva ===== */
+var NAVG={'@home':()=>tab(1),'@backto':()=>{const t=SCR[ST.cur].backTo;ST.hist=[];go(t,{dir:'b'});},'@call':()=>go(ST.voiceSeen?'15':'39'),'@theme':()=>{setTheme(ST.theme==='dark'?'light':'dark');render();},'Cancelar':'<','Agora não':'<','Fechar':'<','Entendi':'<'};
+var NAV={
+'01':{'Criar conta':'03','Já tenho conta':'02'},
+'02':{'Entrar':['06','Oi de novo, sak!','Bom te ver por aqui.','star'],'Google':'06','Discord':'06','Esqueceu sua senha?':['','Enviamos um link para sak@gmail.com',null,'info']},
+'03':{'Criar conta':()=>ageRoute(),'Google':'04','Discord':'04'},
+'31':{'Continuar':'04'},'32':{'Voltar ao início':()=>{ST.hist=[];go('01',{replace:true,dir:'b'});}},
+'04':{'Continuar':'05'},'05':{'Entrar no Squad':()=>{if($('#pact').getAttribute('aria-pressed')==='false'){toast('Aceite o pacto para entrar',null,{icon:'info'});return;}ST.hist=[];go('06');later(()=>toast('Conquista desbloqueada!','Entrou no Squad · +5 XP · toque para ver',{icon:'star',to:'58'}),600);}},
+'06':{'Encontrar squad':'08f','Conte seu estilo':'33','Sua denúncia teve resultado':'41','@bell':'27','@me':()=>tab(3),'Convidar':['','Convite enviado!','Você recebe um aviso quando aceitarem.','send'],'Ver todos':['','Em breve: lista completa',null,'info'],[L1.title]:'09',[L2.title]:'09'},
+'33':{'Salvar':['<','Estilo salvo!','Seus próximos squads vão combinar mais.','check']},
+'52':{'Entrar no squad':['07','Você entrou no squad!','Ranqueada tranquila, foco em call','squad']},
+'07':{'#geral':'08c','#clipes':'08c','#regras':'10','Call do squad':()=>go(ST.voiceSeen?'15':'39'),'Sala de espera':['','Você está na sala de espera',null,'vol'],'@more':'14','Encontrar squad':'08f','Criar squad':'11','@mic':()=>toast('Microfone mutado',null,{icon:'mute'}),'@leave':['','Você saiu da call',null,'exit'],'srv-RT':['','Você já está aqui',null,'squad'],'srv-FD':'46','srv-SM':'09','srv-CQ':'35'},
+'08f':{[L2.title]:'09',[L3.title]:'09','Criar meu squad':'11','Criar squad':'11','Encontrar squad':['','Você já está buscando',null,'compass'],'@filter':'47','srv-RT':'07','srv-FD':'07','srv-SM':'07','srv-CQ':'07'},
+'08c':{'@shield':'13','@send':()=>sendMsg(),'@mic':()=>toast('Microfone mutado',null,{icon:'mute'}),'@leave':['','Você saiu da call',null,'exit']},
+'09':{'Pedir para entrar':'34'},
+'34':{'Encontrar outros squads':'08f','Cancelar pedido':['<','Pedido cancelado',null,'x']},
+'35':{'Ver mais squads':'08f','Chill de quinta à noite':'09','Flex depois do trampo':'09'},
+'11':{'Criar squad':()=>{ST.hist=[];go('07');later(()=>toast('Squad criado!','Ranqueada chill de quinta já está na sua coluna.',{icon:'check'}),400);}},
+'12':{'Reescrever':['08c','Boa! Mensagem reescrita.',null,'check'],'Enviar assim':['08c','Mensagem enviada',null,'send'],'@shield':'13'},
+'13':{'kaiNoturno':'36','dudz':'36','theo.exe':'36','Sair do squad':()=>{ST.hist=[];go('46');}},
+'36':{'Ver perfil':'37','Silenciar':['<','theo.exe foi silenciado','Ninguém foi avisado.','mute'],'Bloquear':['<','theo.exe foi bloqueado','Vocês não caem mais juntos.','block'],'Denunciar':'40'},
+'37':{'Convidar':['','Convite enviado para theo.exe',null,'send'],'Opções':'36'},
+'14':{'Opções':'38','Encerrar squad':'51','Aceitar':()=>reqDone(event,'aceito'),'Recusar':()=>reqDone(event,'recusado'),'sak':'23'},
+'38':{'Ver perfil':'37','Passar liderança':['<','rafa_ace agora é líder',null,'star'],'Silenciar no squad por 1 hora':['<','rafa_ace silenciado por 1 hora',null,'mute'],'Remover do squad':['<','rafa_ace saiu do squad',null,'exit']},
+'51':{'Encerrar squad':()=>{ST.hist=[];go('46');later(()=>toast('Squad encerrado','Os membros foram avisados.',{icon:'x'}),400);},'Passar liderança em vez disso':'38'},
+'39':{'Ligar proteção de voz':()=>{ST.voiceSeen=true;go('15',{replace:true});later(()=>toast('Proteção de voz ligada','Últimos 30 s guardados só no seu aparelho.',{icon:'shieldck'}),300);},'Agora não':()=>{ST.voiceSeen=true;go('15',{replace:true});}},
+'15':{'Fim da partida':'16','@flag':'40','@chat':'08c','@mic':()=>toast('Microfone mutado',null,{icon:'mute'}),'@mute':()=>toast('Silenciado só para você',null,{icon:'mute'})},
+'16':{'Enviar':'17','@flag':'40'},
+'17':{'Jogar outra com esse squad':()=>{ST.hist=[];go('15');},'Voltar ao início':()=>tab(1)},
+'40':{'Continuar':'18'},'18':{'Continuar':'19'},'19':{'Enviar denúncia':'20','Adicionar print ou clipe':['','Escolha um print ou clipe',null,'camera']},
+'20':{'Voltar':()=>tab(1),'Ver minhas denúncias':'21'},
+'21':{'Assédio':'22','Ofensa ou discurso de ódio':'41','Nova denúncia':'40'},
+'22':{'Adicionar informação':['','Informação adicionada à R-2043',null,'check']},
+'41':{},
+'42':{'Bloquear':['','caio_r foi bloqueado',null,'block'],'Pedir nova revisão':['','Pedido de revisão enviado',null,'check'],'Ajustar seus limites':'26'},
+'23':{'Conquistas':'58','Editar perfil':'53','Como funciona?':'25','Segurança':'26','Denúncias':'21','@gear':'28'},
+'53':{'Trocar foto':'24','Salvar':['<','Perfil salvo!',null,'check'],'Pausar conta':'57','Encerrar conta':'54','Valorant':['','Editar Valorant',null,'info'],'League of Legends':['','Editar League of Legends',null,'info'],'Adicionar jogo':['','Escolha um jogo',null,'plus'],'Equilibrado · Voz':'33'},
+'24':{'Enviar foto':['','Escolha uma foto da galeria',null,'camera']},
+'26':{'1 aviso ativo · restrição de chat':'29','Desbloquear':['','theo.exe foi desbloqueado',null,'check'],'Falar com a equipe de segurança':['','Abrimos um chat com a equipe',null,'chat']},
+'27':{'Você recebeu um aviso da moderação':'29','Sua denúncia R-2041 teve resultado':'41','dudz te elogiou: Calma sob pressão':()=>tab(3),'Ver':'52','Você subiu para o nível 3 de reputação':()=>tab(3)},
+'28':{'Pausar conta':'57','Encerrar conta':'54','Sair':()=>{ST.hist=[];go('01',{dir:'b'});},'E-mail e senha':['','E-mail: sak@gmail.com',null,'info'],'Idioma':['','Idioma: Português',null,'info'],'Contas conectadas':['','Discord e Google conectados',null,'check']},
+'29':{'Contestar este aviso':'30'},
+'30':{'Enviar contestação':'43'},
+'43':{'Voltar à Central de segurança':()=>{go('26');}},
+'44':{'Entendi':'26'},'45':{'Entendi':'26','Relembre o pacto':'05'},
+'54':{'Continuar':'55','Pausar conta':'57'},
+'55':{'Encerrar minha conta':()=>{ST.hist=[];go('56');}},
+'56':{'Fechar':()=>{ST.hist=[];go('01',{dir:'b'});}},
+'57':{'Pausar conta':()=>{ST.hist=[];go('01',{dir:'b'});later(()=>toast('Conta pausada','Entre de novo quando quiser.',{icon:'clock'}),400);}},
+'46':{'Encontrar squad':'08f','Criar meu squad':'11'},
+'47':{'Criar squad com esses filtros':'11','Limpar filtros':'08f'},
+'48':{'Fazer uma denúncia':'40'},
+'50':{'Tentar de novo':['06','Conectado de novo!',null,'check']}
+};
+/* ===== reações automáticas (para a demo contar uma história) ===== */
+const HOOK={
+'01':()=>gxInit(),
+'03':()=>{const pw=$('#scr input[type=password]');const bar=$('#pwbar');const upd=()=>{const v=pw.value.length;bar.style.width=Math.min(100,v*12.5)+'%';bar.style.background=v>=8?'var(--sq-status-mint)':v>=5?'var(--sq-status-butter)':'var(--sq-status-coral)';};pw.oninput=upd;requestAnimationFrame(upd);const bd=$$('#scr input').find(i=>/\d\d\/\d\d/.test(i.value)||i.closest('label').textContent.includes('nascimento'));if(bd)bd.oninput=()=>{let v=bd.value.replace(/\D/g,'').slice(0,8);if(v.length>4)v=v.slice(0,2)+'/'+v.slice(2,4)+'/'+v.slice(4);else if(v.length>2)v=v.slice(0,2)+'/'+v.slice(2);bd.value=v;};},
+'05':()=>{const p=$('#pact');p.onclick=()=>{const on=p.getAttribute('aria-pressed')!=='true';p.setAttribute('aria-pressed',on);$('#pactck').style.background=on?'var(--sq-brand-violet)':'transparent';$('#pactck').style.border=on?'0':'2px solid var(--sq-brand-violet)';$('#pactck').innerHTML=on?IC('check',14):'';};},
+'06':()=>{const e=$('#xp62');if(e)countUp(e,0,62,1100);},
+'08c':()=>{renderChat();const i=$('#msgin');i.onkeydown=e=>{if(e.key==='Enter')sendMsg();};later(()=>{const c=$('#chat');if(!c)return;const t=document.createElement('div');t.className='msg new';t.id='typing';t.innerHTML=AV('KA','raw/7bdff2',38)+'<div class="mid"><div class="row" style="gap:6px">'+T('kaiNoturno','b')+'</div><span class="typing"><i></i><i></i><i></i></span></div>';c.appendChild(t);scrollEnd();later(()=>{t.remove();ST.chat.push(['KA','raw/7bdff2','kaiNoturno','partiu! entro na call em 1 min','LÍDER']);renderChat();},1800);},2200);},
+'12':()=>{if(ST.toneText)$('#toneq p').textContent='“'+ST.toneText+'”';},
+'14':()=>{},
+'15':()=>{const el=$('#mt');let s=1;const iv=setInterval(()=>{if(!document.body.contains(el)){clearInterval(iv);return;}s++;el.textContent='00:'+String(s).padStart(2,'0');},1000);},
+'58':()=>{const g=$('#achg');$$('#achf .chip').forEach(c=>c.addEventListener('click',()=>{$$('#achf .chip').forEach(x=>x.classList.toggle('on',x===c));const f=c.dataset.f;$$('#achg .acht').forEach(t=>{t.style.display=f==='all'||(f==='on')===t.classList.contains('on')?'':'none';});}));$$('#achg .acht').forEach(t=>t.addEventListener('click',()=>{const a=ACH[+t.dataset.ach];toast(a[1],a[3]?a[2]:a[2]+' Faltam '+(a[5]-a[4])+'.',{icon:a[3]?a[0]:'lock'});}));},
+'17':()=>{confetti();const x=$('#xp70');countUp(x,62,62+ST.pts,1400);$('#nel').textContent=ST.els;$('#npt').textContent=ST.pts;},
+'20':()=>{later(()=>toast('R-2043 em revisão','Uma pessoa da moderação pegou seu caso.',{icon:'shieldck',to:'22',ms:4200}),3200);},
+'24':()=>{$$('#avcols [data-col]').forEach(b=>b.onclick=()=>{$('#bigav').innerHTML=AV('SA','raw/'+b.dataset.col,96);});},
+'28':()=>{$$('#themech [data-th]').forEach(b=>{b.classList.toggle('on',b.dataset.th===ST.theme);b.addEventListener('click',()=>{setTheme(b.dataset.th);});});},
+'34':()=>{later(()=>toast('marimbondo aceitou seu pedido!','Toque para entrar no squad.',{icon:'squad',to:'07',ms:4500}),3000);},
+'40':()=>pickers(),'18':()=>pickers(),
+'43':()=>{later(()=>toast('Sua contestação teve resposta','Toque para ver o resultado.',{icon:'info',to:'44',ms:4500}),3200);}
+};
+const CHIPHOOK={'16':()=>{let n=0;$$('#scr .chip.on.m').forEach(()=>n++);ST.els=n;ST.pts=n*2;}};
+ST.els=4;ST.pts=8;
+function pickers(){$$('#scr [data-pick]').forEach(b=>b.onclick=()=>{const grp=b.closest('.card').parentElement.closest('section')||b.closest('.card');const all=ST.cur==='18'?$$('#scr [data-pick]'):$$('[data-pick]',b.closest('.card'));all.forEach(x=>x.querySelector('.pk').style.visibility='hidden');b.querySelector('.pk').style.visibility='visible';});}
+function ageRoute(){const bd=$$('#scr input').find(i=>i.closest('label').textContent.includes('nascimento'));const m=(bd&&bd.value||'').match(/(\d\d)\/(\d\d)\/(\d{4})/);if(!m){toast('Confira a data de nascimento',null,{icon:'info'});return;}const b=new Date(+m[3],+m[2]-1,+m[1]);const now=new Date(2026,10,18);let a=now.getFullYear()-b.getFullYear();if(now<new Date(now.getFullYear(),b.getMonth(),b.getDate()))a--;go(a<13?'32':a<18?'31':'04');}
+const CHAT0=[['KA','raw/7bdff2','kaiNoturno','bem-vinda!! vc joga de controladora?','LÍDER'],['DU','raw/ffd166','dudz','boa, falta só duelista agora'],['TH','raw/3de0a6','theo.exe','eu tô aquecendo no range, 5 min'],['SA','raw/8b6cff','sak','bora, cola no B?']];
+ST.chat=CHAT0.slice();
+function renderChat(){const c=$('#chat');if(!c)return;c.innerHTML=ST.chat.map(m=>put(['MSG',...m])).join('');scrollEnd();}
+function scrollEnd(){const v=$('#view');if(v)v.scrollTo({top:v.scrollHeight,behavior:'smooth'});}
+const BAD=/\b(noob|burr[ao]|lixo|idiota|ruim demais|cala a boca)\b/i;
+function sendMsg(){const i=$('#msgin');const t=(i.value||'').trim();if(!t)return;if(BAD.test(t)){ST.toneText=t;go('12');return;}ST.chat.push(['SA','raw/8b6cff','sak',t]);i.value='';renderChat();const last=$$('#chat .msg').pop();last&&last.classList.add('new');}
+function reqDone(e,what){const card=e.target.closest('.card');if(!card)return;card.style.transition='opacity .3s,transform .3s';card.style.opacity='0';card.style.transform='translateX(30px)';setTimeout(()=>card.remove(),300);toast('Pedido '+what,what==='recusado'?'A pessoa só vê que não há vaga agora.':'Novo membro no squad!',{icon:what==='aceito'?'check':'x'});}
+
+function buildSide(){let k=0;const NUM={};GROUPS.forEach(([g,ids])=>ids.forEach(id=>NUM[id]=String(++k).padStart(2,'0')));const m=$('#map');m.innerHTML=GROUPS.map(([g,ids])=>`<h4>${g}</h4>`+ids.map(id=>`<button data-to="${id}"><span>${NUM[id]}</span>${esc(SCR[id].n)}</button>`).join('')).join('');$$('#map button').forEach(b=>b.onclick=()=>{const id=b.dataset.to;ST.hist=[];if(SCR[id].sheet)ST.hist=[SCR[id].under];ST.cur=id;render();});}
+function fit(){const ph=$('.phone');const emb=document.body.classList.contains('embed');const s=emb?Math.min(1,(innerHeight-28)/878,(innerWidth-28)/419):Math.min(1,(innerHeight-40)/870,(innerWidth-(innerWidth>900?380:24))/420);ph.style.transform=`scale(${s})`;ph.style.margin=`${(852*s-852)/2}px ${(393*s-393)/2}px`;}
+window.addEventListener('resize',fit);
+document.addEventListener('DOMContentLoaded',()=>{const QS=new URLSearchParams(location.search);if(QS.has('embed')){document.body.classList.add('embed');document.documentElement.classList.add('embed');}if(QS.get('theme')==='dark'||QS.get('theme')==='light')ST.theme=QS.get('theme');setTheme(ST.theme);buildSide();
+ $$('[data-sqtheme]').forEach(b=>b.onclick=()=>{setTheme(b.dataset.sqtheme);render();});
+ $('#restart').onclick=()=>{ST.hist=[];ST.cur='01';ST.booted=false;ST.voiceSeen=false;ST.chat=CHAT0.slice();render();};
+ const h=location.hash.slice(1);if(SCR[h]){ST.cur=h;if(SCR[h].sheet)ST.hist=[SCR[h].under];}
+ fit();render();});
+
+document.getElementById('sidelogo').innerHTML=logo(34);
+</script></body></html>
