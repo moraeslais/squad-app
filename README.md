@@ -33,9 +33,19 @@ Squad is a personal concept project: a clickable prototype of an app where you p
 
 ## Built with
 
-- HTML, CSS and vanilla JavaScript, in a single file
+- HTML, CSS and vanilla JavaScript, no frameworks and no build step
 - Design in Figma, with its own components and color variables for both themes
 - Developed with AI assistance (Claude)
+
+## Project structure
+
+```
+index.html      # page shell
+css/styles.css  # design tokens, light and dark themes, components
+js/app.js       # screens, navigation and interactions
+img/            # mascot illustrations and banner
+docs/           # screenshots for this README
+```
 
 ## Run locally
 
